@@ -3,39 +3,53 @@ import Link from "next/link";
 
 const artists = [
   {
+    id: "davido",
     name: "Davido",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?auto=format&fit=crop&w=640&q=80",
+    followers: "12.5M"
   },
   {
+    id: "shallipopi",
     name: "Shallipopi",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80",
+    followers: "8.3M"
   },
   {
+    id: "asake",
     name: "Asake",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=640&q=80",
+    followers: "6.7M"
   },
   {
+    id: "seyi-vibez",
     name: "Seyi Vibez",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80",
+    followers: "4.2M"
   },
   {
+    id: "burna-boy",
     name: "Burna Boy",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=640&q=80",
+    followers: "15.8M"
   },
   {
+    id: "odumodu-blvck",
     name: "ODUMODU BLVCK",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=640&q=80",
+    followers: "3.1M"
   },
   {
+    id: "rema",
     name: "Rema",
     role: "Artist",
-    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=640&q=80"
+    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=640&q=80",
+    followers: "9.4M"
   }
 ];
 
@@ -227,9 +241,10 @@ export default function Home() {
             <div className="overflow-x-auto scrollbar-hide">
               <div className="flex gap-5">
                 {artists.map((artist) => (
-                  <div
-                    key={artist.name}
-                    className="group w-36 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-4 text-center shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70"
+                  <Link
+                    key={artist.id}
+                    href={`/artist/${artist.id}`}
+                    className="group w-36 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-4 text-center shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70 cursor-pointer"
                   >
                     <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full ring-2 ring-white/10">
                       <Image
@@ -242,9 +257,9 @@ export default function Home() {
                     </div>
                     <div className="space-y-1">
                       <div className="text-sm font-semibold">{artist.name}</div>
-                      <div className="text-xs text-white/60">{artist.role}</div>
+                      <div className="text-xs text-white/60">{artist.followers} followers</div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

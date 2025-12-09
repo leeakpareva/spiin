@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { PaymentProvider } from "@/lib/payment-context";
+import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
   title: "SPIIN | Discover Music",
@@ -20,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-brand-900 text-white">
-        <PaymentProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </PaymentProvider>
+        <AuthProvider>
+          <PaymentProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </PaymentProvider>
+        </AuthProvider>
       </body>
     </html>
   );

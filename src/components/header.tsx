@@ -1,14 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePayment } from "@/lib/payment-context";
+import { useAuth } from "@/lib/auth-context";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { cartItems } = usePayment();
-  
+  const { user, logout } = useAuth();
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 border-b border-white/5 bg-brand-900/90 backdrop-blur-md">
@@ -42,9 +49,26 @@ export default function Header() {
               </span>
             )}
           </Link>
-          <button className="rounded-full bg-gradient-to-r from-brand-accent to-emerald-500 px-4 py-1.5 text-xs font-semibold text-black shadow-lg shadow-brand-accent/25 hover:shadow-xl transition-all">
-            For Artists
-          </button>
+          {mounted && user ? (
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-white/60">Hi, {user.name}</span>
+              <button
+                onClick={logout}
+                className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold text-white/80 hover:bg-white/10 transition-all"
+              >
+                Logout
+              </button>
+            </div>
+          ) : mounted ? (
+            <div className="flex items-center gap-3">
+              <Link href="/login" className="text-sm text-white/80 hover:text-white">
+                Log in
+              </Link>
+              <Link href="/signup" className="rounded-full bg-gradient-to-r from-brand-accent to-emerald-500 px-4 py-1.5 text-xs font-semibold text-black shadow-lg shadow-brand-accent/25 hover:shadow-xl transition-all">
+                Sign up
+              </Link>
+            </div>
+          ) : null}
         </nav>
 
         {/* Mobile menu toggle */}
@@ -74,6 +98,23 @@ export default function Header() {
             <Link href="/cart" className="py-2 text-sm text-white/80">
               Cart {cartCount > 0 && `(${cartCount})`}
             </Link>
+            {mounted && user ? (
+              <button
+                onClick={logout}
+                className="py-2 text-sm text-white/80 text-left"
+              >
+                Logout
+              </button>
+            ) : mounted ? (
+              <>
+                <Link href="/login" className="py-2 text-sm text-white/80">
+                  Log in
+                </Link>
+                <Link href="/signup" className="py-2 text-sm text-white/80">
+                  Sign up
+                </Link>
+              </>
+            ) : null}
           </div>
         </div>
       )}
