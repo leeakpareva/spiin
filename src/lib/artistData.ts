@@ -20,6 +20,10 @@ export interface Artist {
     streams: string;
     duration: string;
     cover: string;
+    audioSrc?: string;
+    videoSrc?: string;
+    hasAudio: boolean;
+    hasVideo: boolean;
   }>;
   albums: Array<{
     id: string;
@@ -48,28 +52,39 @@ export const artistsData: Record<string, Artist> = {
     },
     recentSongs: [
       {
-        id: "1",
+        id: "davido-unavailable",
         title: "Unavailable (feat. Musa Keys)",
         releaseDate: "2023",
         streams: "125M",
         duration: "3:12",
-        cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/davido-unavailable.mp3",
+        videoSrc: "/video/davido-unavailable.mp4",
+        hasAudio: true,
+        hasVideo: true
       },
       {
-        id: "2",
+        id: "davido-feel",
         title: "Feel",
         releaseDate: "2023",
         streams: "89M",
         duration: "2:45",
-        cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/davido-feel.mp3",
+        hasAudio: true,
+        hasVideo: false
       },
       {
-        id: "3",
+        id: "davido-kante",
         title: "Kante (feat. Fave)",
         releaseDate: "2023",
         streams: "67M",
         duration: "3:28",
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/davido-kante.mp3",
+        videoSrc: "/video/davido-kante.mp4",
+        hasAudio: true,
+        hasVideo: true
       }
     ],
     albums: [
@@ -106,28 +121,38 @@ export const artistsData: Record<string, Artist> = {
     },
     recentSongs: [
       {
-        id: "1",
+        id: "burna-city-boys",
         title: "City Boys",
         releaseDate: "2023",
         streams: "145M",
         duration: "3:30",
-        cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/burna-city-boys.mp3",
+        videoSrc: "/video/burna-city-boys.mp4",
+        hasAudio: true,
+        hasVideo: true
       },
       {
-        id: "2",
+        id: "burna-sittin-on-top",
         title: "Sittin' On Top Of The World",
         releaseDate: "2023",
         streams: "98M",
         duration: "3:15",
-        cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/burna-sittin-on-top.mp3",
+        hasAudio: true,
+        hasVideo: false
       },
       {
-        id: "3",
+        id: "burna-big-7",
         title: "Big 7",
         releaseDate: "2023",
         streams: "76M",
         duration: "2:58",
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        audioSrc: "/audio/burna-big-7.mp3",
+        hasAudio: true,
+        hasVideo: false
       }
     ],
     albums: [

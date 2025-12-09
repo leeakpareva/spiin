@@ -5,13 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { getArtistById } from "@/lib/artistData";
 import { useAuth } from "@/lib/auth-context";
+import { useMedia } from "@/lib/media-context";
+import AudioPlayer from "@/components/audio-player";
+import VideoPlayer from "@/components/video-player";
 
 export default function ArtistPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const artist = getArtistById(id);
   const { user } = useAuth();
+  const { playTrack, currentTrack, isPlaying } = useMedia();
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState<'songs' | 'albums' | 'about'>('songs');
+  const [playingMedia, setPlayingMedia] = useState<{id: string, type: 'audio' | 'video'} | null>(null);
 
   if (!artist) {
     return (
@@ -34,8 +39,26 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
     setIsFollowing(!isFollowing);
   };
 
-  const handlePlay = (songTitle: string) => {
-    alert(`Now playing: ${songTitle}`);
+  const handlePlayAudio = (song: any) => {
+    if (!song.hasAudio || !song.audioSrc) return;
+
+    const track = {
+      id: song.id,
+      title: song.title,
+      artist: artist.name,
+      src: song.audioSrc,
+      cover: song.cover,
+      duration: song.duration,
+      type: 'audio' as const
+    };
+
+    playTrack(track);
+    setPlayingMedia({ id: song.id, type: 'audio' });
+  };
+
+  const handlePlayVideo = (song: any) => {
+    if (!song.hasVideo || !song.videoSrc) return;
+    setPlayingMedia({ id: song.id, type: 'video' });
   };
 
   return (
@@ -168,44 +191,86 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 pb-24">
         {/* Popular Songs Tab */}
         {activeTab === 'songs' && (
-          <div className="space-y-2">
+          <div className="space-y-6">
             <h2 className="text-xl font-bold mb-6">Popular</h2>
+
             {artist.recentSongs.map((song, index) => (
-              <div
-                key={song.id}
-                className="group flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
-              >
-                <span className="text-white/40 w-6 text-center">{index + 1}</span>
+              <div key={song.id} className="space-y-4">
+                {/* Song Info Row */}
+                <div className="group flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                  <span className="text-white/40 w-6 text-center">{index + 1}</span>
 
-                <div className="relative h-12 w-12 rounded overflow-hidden">
-                  <Image
-                    src={song.cover}
-                    alt={song.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <button
-                    onClick={() => handlePlay(song.title)}
-                    className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-                  >
-                    <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
-                  </button>
+                  <div className="relative h-12 w-12 rounded overflow-hidden">
+                    <Image
+                      src={song.cover}
+                      alt={song.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="font-semibold">{song.title}</div>
+                    <div className="text-sm text-white/60">{song.streams} plays</div>
+                  </div>
+
+                  <div className="text-sm text-white/60">{song.duration}</div>
+
+                  {/* Play Buttons */}
+                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {song.hasAudio && (
+                      <button
+                        onClick={() => handlePlayAudio(song)}
+                        className="p-2 rounded-full bg-brand-accent text-black hover:scale-105 transition-transform"
+                        title="Play Audio"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" />
+                        </svg>
+                      </button>
+                    )}
+
+                    {song.hasVideo && (
+                      <button
+                        onClick={() => handlePlayVideo(song)}
+                        className="p-2 rounded-full bg-emerald-500 text-black hover:scale-105 transition-transform"
+                        title="Play Video"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex-1">
-                  <div className="font-semibold">{song.title}</div>
-                  <div className="text-sm text-white/60">{song.streams} plays</div>
-                </div>
+                {/* Media Players */}
+                {playingMedia?.id === song.id && (
+                  <div className="ml-10 space-y-4">
+                    {playingMedia.type === 'audio' && song.hasAudio && song.audioSrc && (
+                      <AudioPlayer
+                        src={song.audioSrc}
+                        title={song.title}
+                        artist={artist.name}
+                        cover={song.cover}
+                        duration={song.duration}
+                        className="max-w-2xl"
+                        onEnded={() => setPlayingMedia(null)}
+                      />
+                    )}
 
-                <div className="text-sm text-white/60">{song.duration}</div>
-
-                <button className="opacity-0 group-hover:opacity-100 transition-opacity text-white/60 hover:text-white">
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                  </svg>
-                </button>
+                    {playingMedia.type === 'video' && song.hasVideo && song.videoSrc && (
+                      <VideoPlayer
+                        src={song.videoSrc}
+                        title={song.title}
+                        artist={artist.name}
+                        poster={song.cover}
+                        className="max-w-4xl aspect-video"
+                        onEnded={() => setPlayingMedia(null)}
+                      />
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
