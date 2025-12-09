@@ -12,6 +12,9 @@ export default function Footer() {
               <Link href="/about" className="hover:text-brand-accent transition-colors">
                 About SPIIN
               </Link>
+              <Link href="/team" className="hover:text-brand-accent transition-colors">
+                Meet the Team
+              </Link>
               <Link href="/press" className="hover:text-brand-accent transition-colors">
                 Press
               </Link>
@@ -75,9 +78,14 @@ export default function Footer() {
 
         <div className="border-t border-white/5 pt-6">
           <div className="flex flex-col gap-4 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-2">
-              <span>© {new Date().getFullYear()} SPIIN.</span>
-              <span className="text-emerald-400/70">Support artists directly.</span>
+            <div className="flex flex-col gap-2 md:gap-0">
+              <div className="flex items-center gap-2">
+                <span>© {new Date().getFullYear()} SPIIN.</span>
+                <span className="text-emerald-400/70">Support artists directly.</span>
+              </div>
+              <div className="text-white/40">
+                Powered by <span className="text-brand-accent font-semibold">NAVADA</span>
+              </div>
             </div>
             <div className="flex flex-wrap gap-4">
               <Link href="/privacy" className="hover:text-brand-accent transition-colors">

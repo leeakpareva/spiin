@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getArtistById } from "@/lib/artistData";
 import { useAuth } from "@/lib/auth-context";
 
-export default function ArtistPage({ params }: { params: { id: string } }) {
-  const artist = getArtistById(params.id);
+export default function ArtistPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const artist = getArtistById(id);
   const { user } = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState<'songs' | 'albums' | 'about'>('songs');
