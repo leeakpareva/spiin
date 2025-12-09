@@ -1,6 +1,7 @@
-import ContentCarousel from "@/components/content-carousel";
+import Link from "next/link";
+import Image from "next/image";
 import SectionHeader from "@/components/section-header";
-import { artists, discovered, trending } from "@/lib/mockData";
+import { artistsData } from "@/lib/artistData";
 import BottomNav from "@/components/bottom-nav";
 
 export default function ArtistsPage() {
@@ -18,11 +19,48 @@ export default function ArtistsPage() {
 
         {/* Featured Artists */}
         <div className="mb-10">
-          <SectionHeader 
+          <SectionHeader
             title="Featured Artists"
             description="Hand-picked creators making waves"
           />
-          <ContentCarousel items={artists} />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Object.values(artistsData).map((artist) => (
+              <Link
+                key={artist.id}
+                href={`/artist/${artist.id}`}
+                className="group space-y-4"
+              >
+                <div className="relative aspect-square rounded-2xl overflow-hidden bg-brand-800/30 ring-1 ring-white/5 hover:ring-white/20 transition-all">
+                  <Image
+                    src={artist.image}
+                    alt={artist.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                  {artist.verified && (
+                    <div className="absolute top-3 right-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="text-white">
+                      <div className="font-semibold text-sm mb-1">{artist.name}</div>
+                      <div className="text-xs text-white/70">{artist.followers} followers</div>
+                      <div className="text-xs text-white/50">{artist.genre}</div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Categories */}
@@ -53,32 +91,34 @@ export default function ArtistsPage() {
           </div>
         </div>
 
-        {/* New Artists */}
-        <div className="mb-10">
-          <SectionHeader 
-            title="New to SPIIN"
-            description="Fresh talent joining our community"
-            actionLabel="See all"
-          />
-          <ContentCarousel items={discovered.map(item => ({
-            ...item,
-            type: "artist" as const,
-            subtitle: item.subtitle + " · New Artist"
-          }))} />
-        </div>
-
-        {/* Trending */}
+        {/* Artist Stats */}
         <div className="mb-8">
-          <SectionHeader 
-            title="Trending Artists"
-            description="Artists gaining momentum this week"
-            actionLabel="See all"
+          <SectionHeader
+            title="Platform Statistics"
+            description="Growing community of independent creators"
           />
-          <ContentCarousel items={trending.map(item => ({
-            ...item,
-            type: "artist" as const,
-            subtitle: item.subtitle + " · Trending"
-          }))} />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-brand-800/30 rounded-xl p-6 text-center">
+              <div className="text-2xl font-bold text-brand-accent mb-2">{Object.keys(artistsData).length}</div>
+              <div className="text-sm text-white/60">Featured Artists</div>
+            </div>
+            <div className="bg-brand-800/30 rounded-xl p-6 text-center">
+              <div className="text-2xl font-bold text-brand-accent mb-2">
+                {Object.values(artistsData).reduce((total, artist) => total + artist.recentSongs.length, 0)}+
+              </div>
+              <div className="text-sm text-white/60">Songs Available</div>
+            </div>
+            <div className="bg-brand-800/30 rounded-xl p-6 text-center">
+              <div className="text-2xl font-bold text-brand-accent mb-2">
+                {Object.values(artistsData).reduce((total, artist) => total + artist.albums.length, 0)}
+              </div>
+              <div className="text-sm text-white/60">Albums & EPs</div>
+            </div>
+            <div className="bg-brand-800/30 rounded-xl p-6 text-center">
+              <div className="text-2xl font-bold text-brand-accent mb-2">100%</div>
+              <div className="text-sm text-white/60">Direct to Artists</div>
+            </div>
+          </div>
         </div>
       </div>
       
