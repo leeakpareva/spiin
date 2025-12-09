@@ -1,57 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import ScrollableSection from "@/components/scrollable-section";
+import { artistsData } from "@/lib/artistData";
 
-const artists = [
-  {
-    id: "davido",
-    name: "Davido",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?auto=format&fit=crop&w=640&q=80",
-    followers: "12.5M"
-  },
-  {
-    id: "shallipopi",
-    name: "Shallipopi",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80",
-    followers: "8.3M"
-  },
-  {
-    id: "asake",
-    name: "Asake",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=640&q=80",
-    followers: "6.7M"
-  },
-  {
-    id: "seyi-vibez",
-    name: "Seyi Vibez",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80",
-    followers: "4.2M"
-  },
-  {
-    id: "burna-boy",
-    name: "Burna Boy",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=640&q=80",
-    followers: "15.8M"
-  },
-  {
-    id: "odumodu-blvck",
-    name: "ODUMODU BLVCK",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=640&q=80",
-    followers: "3.1M"
-  },
-  {
-    id: "rema",
-    name: "Rema",
-    role: "Artist",
-    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=640&q=80",
-    followers: "9.4M"
-  }
-];
+// Convert artistData to array format for home page with all 20 artists
+const artists = Object.values(artistsData).map(artist => ({
+  id: artist.id,
+  name: artist.name,
+  role: "Artist",
+  image: artist.image,
+  followers: artist.followers
+}));
 
 const popularSongs = [
   {
@@ -94,63 +53,9 @@ const popularSongs = [
 export default function Home() {
   return (
     <div className="bg-brand-900">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 pb-12 pt-6 lg:flex-row lg:pt-10">
-        {/* Left rail - library & utility */}
-        <aside className="hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">
-          <div className="space-y-4 rounded-2xl border border-white/5 bg-brand-800/80 p-4 shadow-xl shadow-black/30">
-            <div className="flex items-center justify-between text-sm font-semibold">
-              <span>Your Library</span>
-              <button className="rounded-full bg-brand-700 p-2 hover:bg-brand-600">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <div className="rounded-xl bg-gradient-to-b from-brand-800 to-brand-700 p-4 shadow-inner shadow-black/20">
-                <div className="text-sm font-semibold">Create your first playlist</div>
-                <p className="mt-1 text-xs text-white/60">It&apos;s easy, we&apos;ll help you</p>
-                <Link
-                  href="/explore"
-                  className="mt-3 inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-semibold text-black shadow-md shadow-black/30"
-                >
-                  Create playlist
-                </Link>
-              </div>
-
-              <div className="rounded-xl bg-gradient-to-b from-brand-800 to-brand-700 p-4 shadow-inner shadow-black/20">
-                <div className="text-sm font-semibold">Let&apos;s find some music to follow</div>
-                <p className="mt-1 text-xs text-white/60">We&apos;ll keep you updated on new releases</p>
-                <Link
-                  href="/explore"
-                  className="mt-3 inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-semibold text-black shadow-md shadow-black/30"
-                >
-                  Browse music
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-3 text-[11px] text-white/40">
-            <div className="flex flex-wrap gap-x-4 gap-y-1">
-              <Link href="/legal">Legal</Link>
-              <Link href="/safety">Safety &amp; Privacy Center</Link>
-              <Link href="/privacy">Privacy Policy</Link>
-              <Link href="/cookies">Cookies</Link>
-              <Link href="/accessibility">Accessibility</Link>
-            </div>
-            <button className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-white hover:border-white/25">
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0v-4m0 0a3 3 0 100-6 3 3 0 000 6z" />
-              </svg>
-              English
-            </button>
-          </div>
-        </aside>
-
+      <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-6 lg:pt-10">
         {/* Main content */}
-        <div className="flex-1 space-y-8">
+        <div className="space-y-8">
           <div className="rounded-2xl border border-white/5 bg-brand-800/60 p-3 shadow-lg shadow-black/25">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
               <div className="flex items-center gap-2">
@@ -205,7 +110,7 @@ export default function Home() {
           </div>
 
           <div className="overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 shadow-2xl shadow-orange-900/30">
-            <div className="grid items-center gap-6 p-6 md:grid-cols-[1.4fr,1fr] md:p-8">
+            <div className="grid items-center gap-6 p-6 md:grid-cols-[1.2fr,1fr] md:p-8">
               <div className="space-y-4 text-white">
                 <div className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">Featured</div>
                 <h1 className="text-4xl font-black leading-tight sm:text-5xl">SPIIN Spotlight</h1>
@@ -222,82 +127,73 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="relative h-56 w-full overflow-hidden rounded-2xl md:h-64 lg:h-72">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-700/50 to-brand-900/50" />
-                <div className="absolute bottom-4 right-4 text-3xl font-black tracking-tight text-white drop-shadow-lg">
-                  SPIIN
-                </div>
+              <div className="relative h-64 w-full overflow-hidden rounded-2xl md:h-80 lg:h-96 xl:h-[400px]">
+                <Image
+                  src="/rema.png"
+                  alt="Rema"
+                  fill
+                  className="object-cover object-center z-10"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-700/30 to-brand-900/30 z-20" />
               </div>
             </div>
           </div>
 
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-lg font-extrabold uppercase tracking-tight">Artists</div>
-              <Link href="/artists" className="text-sm font-semibold text-white/70 hover:text-white">
-                Show all
+          <ScrollableSection
+            title="Artists"
+            showAllHref="/artists"
+          >
+            {artists.map((artist) => (
+              <Link
+                key={artist.id}
+                href={`/artist/${artist.id}`}
+                className="group w-36 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-4 text-center shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70 cursor-pointer"
+              >
+                <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full ring-2 ring-white/10">
+                  <Image
+                    src={artist.image}
+                    alt={artist.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="112px"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm font-semibold">{artist.name}</div>
+                  <div className="text-xs text-white/60">{artist.followers} followers</div>
+                </div>
               </Link>
-            </div>
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-5">
-                {artists.map((artist) => (
-                  <Link
-                    key={artist.id}
-                    href={`/artist/${artist.id}`}
-                    className="group w-36 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-4 text-center shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70 cursor-pointer"
-                  >
-                    <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full ring-2 ring-white/10">
-                      <Image
-                        src={artist.image}
-                        alt={artist.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="112px"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <div className="text-sm font-semibold">{artist.name}</div>
-                      <div className="text-xs text-white/60">{artist.followers} followers</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
+            ))}
+          </ScrollableSection>
 
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-lg font-extrabold uppercase tracking-tight">Popular Songs</div>
-              <Link href="/explore" className="text-sm font-semibold text-white/70 hover:text-white">
-                Show all
-              </Link>
-            </div>
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-5">
-                {popularSongs.map((song) => (
-                  <div
-                    key={song.title}
-                    className="group w-44 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-3 shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70"
-                  >
-                    <div className="relative h-44 w-full overflow-hidden rounded-xl">
-                      <Image
-                        src={song.cover}
-                        alt={song.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="176px"
-                      />
-                      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-b from-black/10 via-transparent to-black/30" />
-                    </div>
-                    <div className="space-y-1 px-1">
-                      <div className="text-sm font-semibold leading-tight line-clamp-2">{song.title}</div>
-                      <div className="text-xs text-white/60 leading-tight line-clamp-2">{song.artists}</div>
-                    </div>
-                  </div>
-                ))}
+          <ScrollableSection
+            title="Popular Songs"
+            showAllHref="/explore"
+          >
+            {popularSongs.map((song) => (
+              <div
+                key={song.title}
+                className="group w-44 shrink-0 space-y-3 rounded-2xl bg-brand-800/40 p-3 shadow-lg shadow-black/25 ring-1 ring-white/5 hover:bg-brand-800/70 cursor-pointer"
+              >
+                <div className="relative h-44 w-full overflow-hidden rounded-xl">
+                  <Image
+                    src={song.cover}
+                    alt={song.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="176px"
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-b from-black/10 via-transparent to-black/30" />
+                </div>
+                <div className="space-y-1 px-1">
+                  <div className="text-sm font-semibold leading-tight line-clamp-2">{song.title}</div>
+                  <div className="text-xs text-white/60 leading-tight line-clamp-2">{song.artists}</div>
+                </div>
               </div>
-            </div>
-          </section>
+            ))}
+          </ScrollableSection>
         </div>
       </div>
     </div>

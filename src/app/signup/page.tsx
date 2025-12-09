@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+import { usePayment, Subscription } from "@/lib/payment-context";
+import { Check, Star, Music } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -12,8 +15,12 @@ export default function SignupPage() {
     password: "",
     confirmPassword: ""
   });
+  const [selectedPlan, setSelectedPlan] = useState<string>("free");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { signup } = useAuth();
+  const { availableSubscriptions, upgradeSubscription } = usePayment();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,29 +40,25 @@ export default function SignupPage() {
 
     setIsLoading(true);
 
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    try {
+      // Create account using auth context
+      const signupSuccess = await signup(formData.email, formData.password, formData.name);
 
-    // Mock signup - in development, just store in localStorage
-    const newUser = {
-      email: formData.email,
-      name: formData.name,
-      isAuthenticated: true
-    };
+      if (signupSuccess) {
+        // Set subscription plan
+        if (selectedPlan === "premium") {
+          await upgradeSubscription("premium");
+        }
 
-    localStorage.setItem("user", JSON.stringify(newUser));
+        // Redirect to home page
+        router.push("/");
+      } else {
+        setError("Account with this email already exists");
+      }
+    } catch (err) {
+      setError("Failed to create account. Please try again.");
+    }
 
-    // Mock adding to users list (in real app, this would be backend)
-    const existingUsers = JSON.parse(localStorage.getItem("mockUsers") || "[]");
-    existingUsers.push({
-      email: formData.email,
-      password: formData.password,
-      name: formData.name
-    });
-    localStorage.setItem("mockUsers", JSON.stringify(existingUsers));
-
-    // Redirect to home page
-    router.push("/");
     setIsLoading(false);
   };
 
@@ -72,7 +75,58 @@ export default function SignupPage() {
         <div className="bg-brand-800/60 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl shadow-black/50 p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Join SPIIN</h1>
-            <p className="text-white/60">Create your account to start listening</p>
+            <p className="text-white/60">Choose your plan and create your account</p>
+          </div>
+
+          {/* Plan Selection */}
+          <div className="space-y-4 mb-8">
+            <h3 className="text-lg font-semibold text-white">Choose Your Plan</h3>
+
+            {availableSubscriptions.map((plan: Subscription) => (
+              <div
+                key={plan.id}
+                onClick={() => setSelectedPlan(plan.id)}
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                  selectedPlan === plan.id
+                    ? plan.id === 'premium'
+                      ? 'border-yellow-500 bg-yellow-500/10'
+                      : 'border-brand-accent bg-brand-accent/10'
+                    : 'border-white/20 hover:border-white/40'
+                }`}
+              >
+                {plan.id === 'premium' && (
+                  <div className="absolute -top-2 left-4 bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                    <Star size={10} />
+                    POPULAR
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-bold text-white">{plan.name}</h4>
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-white">
+                      ${plan.price}
+                      {plan.price > 0 && <span className="text-sm font-normal">/month</span>}
+                    </div>
+                    {plan.price === 0 && <div className="text-xs text-white/60">Forever</div>}
+                  </div>
+                </div>
+
+                <ul className="space-y-1">
+                  {plan.features.slice(0, 3).map((feature, index) => (
+                    <li key={index} className="flex items-center gap-2 text-xs text-white/80">
+                      <Check size={12} className="text-green-500 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                  {plan.features.length > 3 && (
+                    <li className="text-xs text-white/60">
+                      +{plan.features.length - 3} more features
+                    </li>
+                  )}
+                </ul>
+              </div>
+            ))}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -149,9 +203,17 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-full hover:from-orange-600 hover:to-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-900/30"
+              className={`w-full py-3 px-4 font-semibold rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${
+                selectedPlan === 'premium'
+                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-black hover:from-yellow-600 hover:to-amber-600 shadow-yellow-900/30'
+                  : 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600 shadow-orange-900/30'
+              }`}
             >
-              {isLoading ? "Creating account..." : "Sign up"}
+              {isLoading ? "Creating account..." :
+                selectedPlan === 'premium'
+                  ? "Start Premium - $10/month"
+                  : "Start Free"
+              }
             </button>
           </form>
 

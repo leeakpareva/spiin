@@ -8,12 +8,13 @@ export default {
     extend: {
       colors: {
         brand: {
-          900: "#02040A",   // main background (almost black)
-          800: "#050814",
-          700: "#07101F",
-          600: "#0B1729",
-          500: "#111827",
-          accent: "#16A34A" // dark-ish green accent
+          900: "#1a0804",   // darkest blood orange tinted black
+          800: "#2d0f07",   // very dark blood orange
+          700: "#451208",   // dark blood orange
+          600: "#6b1a0a",   // medium-dark blood orange
+          500: "#8b2408",   // medium blood orange
+          400: "#d14510",   // blood orange
+          accent: "#ff6b35" // bright blood orange accent
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

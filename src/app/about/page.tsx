@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -32,10 +31,10 @@ export default function AboutPage() {
             <div className="space-y-6">
               <h2 className="text-4xl font-bold">Reimagining music for the creator economy</h2>
               <p className="text-lg text-white/80 leading-relaxed">
-                SPIIN is a next-generation music platform built for artists first - a place where creators don't just distribute music, but own their audience, earn directly, and build sustainable careers.
+                SPIIN is a next-generation music platform built for artists first - a place where creators don&apos;t just distribute music, but own their audience, earn directly, and build sustainable careers.
               </p>
               <p className="text-lg text-white/80 leading-relaxed">
-                Designed as the artist-centred evolution of traditional streaming, SPIIN blends premium music discovery with direct creator monetisation. Fans don't just listen - they tip, subscribe, unlock exclusive drops, and pay artists directly inside the app.
+                Designed as the artist-centred evolution of traditional streaming, SPIIN blends premium music discovery with direct creator monetisation. Fans don&apos;t just listen - they tip, subscribe, unlock exclusive drops, and pay artists directly inside the app.
               </p>
             </div>
 

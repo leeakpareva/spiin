@@ -38,7 +38,7 @@ export const artistsData: Record<string, Artist> = {
   "davido": {
     id: "davido",
     name: "Davido",
-    image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?auto=format&fit=crop&w=640&q=80",
+    image: "/Davido/close.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "12.5M",
     monthlyListeners: "8.2M",
@@ -107,7 +107,7 @@ export const artistsData: Record<string, Artist> = {
   "burna-boy": {
     id: "burna-boy",
     name: "Burna Boy",
-    image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=640&q=80",
+    image: "/Burna/closeup.png",
     coverImage: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1920&q=80",
     followers: "15.8M",
     monthlyListeners: "11.3M",
@@ -175,7 +175,7 @@ export const artistsData: Record<string, Artist> = {
   "asake": {
     id: "asake",
     name: "Asake",
-    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=640&q=80",
+    image: "/Asake/mrmoney.png",
     coverImage: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1920&q=80",
     followers: "6.7M",
     monthlyListeners: "5.8M",
@@ -233,7 +233,7 @@ export const artistsData: Record<string, Artist> = {
   "rema": {
     id: "rema",
     name: "Rema",
-    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=640&q=80",
+    image: "/Rema/farsmoke.png",
     coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1920&q=80",
     followers: "9.4M",
     monthlyListeners: "7.1M",
@@ -458,6 +458,498 @@ export const artistsData: Record<string, Artist> = {
         title: "The Drop",
         year: "2023",
         cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "wizkid": {
+    id: "wizkid",
+    name: "Wizkid",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "18.3M",
+    monthlyListeners: "12.5M",
+    bio: "Ayodeji Ibrahim Balogun, known professionally as Wizkid, is a Nigerian singer and songwriter. He is regarded as one of the biggest and most influential African artists of all time.",
+    genre: "Afrobeats, Afro-pop, R&B",
+    verified: true,
+    socialLinks: {
+      instagram: "wizkidayo",
+      twitter: "wizkidayo",
+      youtube: "WizkidOfficial"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Essence (feat. Tems)",
+        releaseDate: "2020",
+        streams: "235M",
+        duration: "3:12",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      },
+      {
+        id: "2",
+        title: "Joro",
+        releaseDate: "2019",
+        streams: "156M",
+        duration: "2:58",
+        cover: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Made in Lagos",
+        year: "2020",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "tiwa-savage": {
+    id: "tiwa-savage",
+    name: "Tiwa Savage",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "8.9M",
+    monthlyListeners: "5.2M",
+    bio: "Tiwatope Savage is a Nigerian singer, songwriter, and actress. She is one of Africa's biggest female artists and a pioneer for women in Afrobeats.",
+    genre: "Afrobeats, R&B, Pop",
+    verified: true,
+    socialLinks: {
+      instagram: "tiwasavage",
+      twitter: "TiwaSavage"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Somebody's Son (feat. Brandy)",
+        releaseDate: "2021",
+        streams: "89M",
+        duration: "3:45",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Celia",
+        year: "2020",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "kizz-daniel": {
+    id: "kizz-daniel",
+    name: "Kizz Daniel",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "6.8M",
+    monthlyListeners: "4.3M",
+    bio: "Oluwatobiloba Daniel Anidugbe, known as Kizz Daniel, is a Nigerian singer and songwriter known for his unique Afrobeats style.",
+    genre: "Afrobeats, Afro-pop",
+    verified: true,
+    socialLinks: {
+      instagram: "kizzdaniel",
+      twitter: "KizzDaniel"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Buga (feat. Tekno)",
+        releaseDate: "2022",
+        streams: "145M",
+        duration: "2:51",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Barnabas",
+        year: "2021",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "fireboy-dml": {
+    id: "fireboy-dml",
+    name: "Fireboy DML",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "5.7M",
+    monthlyListeners: "3.8M",
+    bio: "Adedamola Adefolahan, known professionally as Fireboy DML, is a Nigerian Afrobeats singer and songwriter signed to YBNL Nation.",
+    genre: "Afrobeats, Afro-pop, R&B",
+    verified: true,
+    socialLinks: {
+      instagram: "fireboydml",
+      twitter: "fireboydml"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Peru",
+        releaseDate: "2021",
+        streams: "98M",
+        duration: "2:53",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Playboy",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "omah-lay": {
+    id: "omah-lay",
+    name: "Omah Lay",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "4.2M",
+    monthlyListeners: "2.9M",
+    bio: "Stanley Omah Didia, known as Omah Lay, is a Nigerian singer, songwriter and record producer who gained popularity with his unique Afrobeats sound.",
+    genre: "Afrobeats, Afro-fusion",
+    verified: true,
+    socialLinks: {
+      instagram: "omah_lay",
+      twitter: "Omah_Lay"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Understand",
+        releaseDate: "2021",
+        streams: "76M",
+        duration: "2:47",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Boy Alone",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "joeboy": {
+    id: "joeboy",
+    name: "Joeboy",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "3.8M",
+    monthlyListeners: "2.1M",
+    bio: "Joseph Akinwale Akinfenwa-Donus, known as Joeboy, is a Nigerian Afrobeats singer and songwriter known for his melodic sound.",
+    genre: "Afrobeats, Afro-pop",
+    verified: true,
+    socialLinks: {
+      instagram: "joeboy",
+      twitter: "joeboyofficial"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Alcohol",
+        releaseDate: "2021",
+        streams: "54M",
+        duration: "3:01",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Somewhere Between Beauty & Magic",
+        year: "2021",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "oxlade": {
+    id: "oxlade",
+    name: "Oxlade",
+    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "2.9M",
+    monthlyListeners: "1.8M",
+    bio: "Ikuforiji Olaitan Abdulrahman, known as Oxlade, is a Nigerian Afrobeats singer and songwriter with a distinctive vocal style.",
+    genre: "Afrobeats, R&B",
+    verified: true,
+    socialLinks: {
+      instagram: "oxladeofficial",
+      twitter: "oxladeofficial"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Kulosa",
+        releaseDate: "2022",
+        streams: "42M",
+        duration: "2:38",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Eclipse",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "ruger": {
+    id: "ruger",
+    name: "Ruger",
+    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "3.1M",
+    monthlyListeners: "1.9M",
+    bio: "Michael Adebayo Olayinka, known as Ruger, is a Nigerian Afrobeats singer and songwriter known for his energetic performances.",
+    genre: "Afrobeats, Afro-pop",
+    verified: true,
+    socialLinks: {
+      instagram: "rugerofficial",
+      twitter: "rugerofficial"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Dior",
+        releaseDate: "2022",
+        streams: "67M",
+        duration: "2:44",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "The Second Wave",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "bnxn": {
+    id: "bnxn",
+    name: "BNXN",
+    image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "2.7M",
+    monthlyListeners: "1.6M",
+    bio: "Daniel Benson, known as BNXN (formerly Buju), is a Nigerian Afrobeats singer and songwriter with a smooth vocal style.",
+    genre: "Afrobeats, R&B",
+    verified: true,
+    socialLinks: {
+      instagram: "bnxn",
+      twitter: "BNXN"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Finesse (feat. Pheelz)",
+        releaseDate: "2022",
+        streams: "89M",
+        duration: "2:33",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Bad Since '97",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "victony": {
+    id: "victony",
+    name: "Victony",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "2.3M",
+    monthlyListeners: "1.4M",
+    bio: "Anthony Ebuka Victor, known as Victony, is a Nigerian Afrobeats singer and songwriter who has gained recognition for his melodic style.",
+    genre: "Afrobeats, Afro-fusion",
+    verified: true,
+    socialLinks: {
+      instagram: "victony",
+      twitter: "victony"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Holy Father (feat. Mayorkun)",
+        releaseDate: "2021",
+        streams: "35M",
+        duration: "3:17",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Outlaw",
+        year: "2023",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "zinoleesky": {
+    id: "zinoleesky",
+    name: "Zinoleesky",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "2.8M",
+    monthlyListeners: "1.7M",
+    bio: "Oniyide Azeez, known as Zinoleesky, is a Nigerian Afrobeats singer and songwriter signed to Marlian Music.",
+    genre: "Afrobeats, Street-hop",
+    verified: true,
+    socialLinks: {
+      instagram: "zinoleesky",
+      twitter: "zinoleesky"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Kilofeshe",
+        releaseDate: "2021",
+        streams: "58M",
+        duration: "2:41",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Chrome",
+        year: "2022",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "EP"
+      }
+    ]
+  },
+
+  "mohbad": {
+    id: "mohbad",
+    name: "Mohbad",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "3.5M",
+    monthlyListeners: "2.2M",
+    bio: "Ilerioluwa Oladimeji Aloba, known as Mohbad, was a Nigerian rapper and singer who made significant contributions to Afrobeats and street-hop music.",
+    genre: "Afrobeats, Hip-hop, Street-hop",
+    verified: true,
+    socialLinks: {
+      instagram: "mohbad",
+      twitter: "mohbad"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Peace",
+        releaseDate: "2023",
+        streams: "125M",
+        duration: "2:55",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Blessed",
+        year: "2023",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
+        type: "Album"
+      }
+    ]
+  },
+
+  "young-jonn": {
+    id: "young-jonn",
+    name: "Young Jonn",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
+    followers: "1.9M",
+    monthlyListeners: "1.2M",
+    bio: "John Saviours Udomboso, known as Young Jonn, is a Nigerian record producer and singer who transitioned from producing to performing.",
+    genre: "Afrobeats, Afro-pop",
+    verified: true,
+    socialLinks: {
+      instagram: "youngjonn",
+      twitter: "youngjonn"
+    },
+    recentSongs: [
+      {
+        id: "1",
+        title: "Dada (feat. Davido)",
+        releaseDate: "2022",
+        streams: "73M",
+        duration: "3:05",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: true
+      }
+    ],
+    albums: [
+      {
+        id: "album1",
+        title: "Love Is Not Enough",
+        year: "2023",
+        cover: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=300&q=80",
         type: "EP"
       }
     ]

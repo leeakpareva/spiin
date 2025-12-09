@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useMedia } from "@/lib/media-context";
 import AudioPlayer from "@/components/audio-player";
 import VideoPlayer from "@/components/video-player";
+import ArtistPayment from "@/components/artist-payment";
 
 export default function ArtistPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -15,7 +16,7 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
   const { user } = useAuth();
   const { playTrack, currentTrack, isPlaying } = useMedia();
   const [isFollowing, setIsFollowing] = useState(false);
-  const [activeTab, setActiveTab] = useState<'songs' | 'albums' | 'about'>('songs');
+  const [activeTab, setActiveTab] = useState<'songs' | 'albums' | 'about' | 'support'>('songs');
   const [playingMedia, setPlayingMedia] = useState<{id: string, type: 'audio' | 'video'} | null>(null);
 
   if (!artist) {
@@ -180,6 +181,19 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
             >
               About
               {activeTab === 'about' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-accent" />
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab('support')}
+              className={`pb-4 px-1 font-semibold transition-colors relative ${
+                activeTab === 'support'
+                  ? 'text-white'
+                  : 'text-white/60 hover:text-white'
+              }`}
+            >
+              Support Artist
+              {activeTab === 'support' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-accent" />
               )}
             </button>
@@ -381,6 +395,14 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Support Artist Tab */}
+        {activeTab === 'support' && (
+          <div className="max-w-4xl">
+            <h2 className="text-xl font-bold mb-6">Support {artist.name}</h2>
+            <ArtistPayment artistId={id} />
           </div>
         )}
       </div>

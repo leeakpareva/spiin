@@ -37,6 +37,11 @@ export default function VideoPlayer({
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Don't render if no src is provided
+  if (!src || src.trim() === '') {
+    return null;
+  }
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -109,7 +114,7 @@ export default function VideoPlayer({
         onPlay?.();
       }
     } catch (error) {
-      console.error('Error playing video:', error);
+      // Error occurred while playing video
       setIsLoading(false);
     }
   };

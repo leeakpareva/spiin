@@ -36,6 +36,11 @@ export default function AudioPlayer({
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
 
+  // Don't render if no src is provided
+  if (!src || src.trim() === '') {
+    return null;
+  }
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -79,7 +84,7 @@ export default function AudioPlayer({
         onPlay?.();
       }
     } catch (error) {
-      console.error('Error playing audio:', error);
+      // Error occurred while playing audio
       setIsLoading(false);
     }
   };

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 // --- Utility ---
 // function cn(...inputs: ClassValue[]) {
@@ -17,6 +18,8 @@ interface FlipCardProps {
     total: number;
     phase: AnimationPhase;
     target: { x: number; y: number; rotation: number; scale: number; opacity: number };
+    artistId: string;
+    onImageClick: (artistId: string) => void;
 }
 
 // --- FlipCard Component ---
@@ -29,6 +32,8 @@ function FlipCard({
     total,
     phase,
     target,
+    artistId,
+    onImageClick,
 }: FlipCardProps) {
     return (
         <motion.div
@@ -55,6 +60,7 @@ function FlipCard({
                 perspective: "1000px",
             }}
             className="cursor-pointer group"
+            onClick={() => onImageClick(artistId)}
         >
             <motion.div
                 className="relative h-full w-full"
@@ -81,7 +87,7 @@ function FlipCard({
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                     <div className="text-center">
-                        <p className="text-[8px] font-bold text-purple-400 uppercase tracking-widest mb-1">Play</p>
+                        <p className="text-[8px] font-bold text-orange-400 uppercase tracking-widest mb-1">Play</p>
                         <p className="text-xs font-medium text-white">Music</p>
                     </div>
                 </div>
@@ -118,13 +124,26 @@ const IMAGES = [
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Music studio
 ];
 
+// Map each image to an artist ID - all 20 artists
+const ARTIST_IDS = [
+    "davido", "burna-boy", "asake", "rema", "shallipopi",
+    "seyi-vibez", "odumodu-blvck", "wizkid", "tiwa-savage", "kizz-daniel",
+    "fireboy-dml", "omah-lay", "joeboy", "oxlade", "ruger",
+    "bnxn", "victony", "zinoleesky", "mohbad", "young-jonn"
+];
+
 // Helper for linear interpolation
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t;
 
 export default function IntroAnimation() {
+    const router = useRouter();
     const [introPhase, setIntroPhase] = useState<AnimationPhase>("scatter");
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleImageClick = (artistId: string) => {
+        router.push(`/player/${artistId}`);
+    };
 
     // --- Container Size ---
     useEffect(() => {
@@ -266,7 +285,7 @@ export default function IntroAnimation() {
     const contentY = useTransform(smoothMorph, [0.8, 1], [20, 0]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-full bg-gradient-to-b from-purple-900 via-slate-900 to-black overflow-hidden">
+        <div ref={containerRef} className="relative w-full h-full bg-gradient-to-b from-orange-900 via-red-900 to-brand-900 overflow-hidden">
             {/* Container */}
             <div className="flex h-full w-full flex-col items-center justify-center perspective-1000">
 
@@ -284,7 +303,7 @@ export default function IntroAnimation() {
                         initial={{ opacity: 0 }}
                         animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="mt-4 text-xs font-bold tracking-[0.2em] text-purple-300"
+                        className="mt-4 text-xs font-bold tracking-[0.2em] text-orange-300"
                     >
                         SCROLL TO EXPLORE
                     </motion.p>
@@ -298,7 +317,7 @@ export default function IntroAnimation() {
                     <h2 className="text-3xl md:text-5xl font-semibold text-white tracking-tight mb-4">
                         Explore Music
                     </h2>
-                    <p className="text-sm md:text-base text-purple-200 max-w-lg leading-relaxed">
+                    <p className="text-sm md:text-base text-orange-200 max-w-lg leading-relaxed">
                         Discover emerging artists and exclusive tracks. <br className="hidden md:block" />
                         Support creators directly while exploring the future of music.
                     </p>
@@ -403,6 +422,8 @@ export default function IntroAnimation() {
                                 total={TOTAL_IMAGES}
                                 phase={introPhase} // Pass intro phase for initial animations
                                 target={target}
+                                artistId={ARTIST_IDS[i]}
+                                onImageClick={handleImageClick}
                             />
                         );
                     })}
