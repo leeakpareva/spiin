@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePayment } from "@/lib/payment-context";
 import { useAuth } from "@/lib/auth-context";
@@ -20,15 +21,17 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-white/5 bg-brand-900/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex flex-col leading-tight">
-            <span className="text-base font-bold tracking-tight">
-              SPIIN
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/60">
-              artist experiences
-            </span>
-          </div>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/Rema/logo.png"
+            alt="SPIIN Logo"
+            width={80}
+            height={60}
+            className="object-contain"
+          />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+            artist experiences
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm md:flex">
