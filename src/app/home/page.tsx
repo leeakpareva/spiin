@@ -176,127 +176,33 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 shadow-2xl shadow-orange-900/30">
-            <div className="grid items-center gap-6 p-6 md:grid-cols-[1.2fr,1fr] md:p-8">
-              <div className="space-y-4 text-white">
-                <div className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">Featured</div>
-                <h1 className="text-4xl font-black leading-tight sm:text-5xl">SPIIN Spotlight</h1>
-                <p className="max-w-2xl text-base text-white/85">
-                  Discover the latest drops and support your favorite artists directly. Build playlists, follow music, and stay on top of the culture.
-                </p>
-                <div className="flex flex-wrap gap-3 text-sm font-semibold">
-                  <Link href="/explore" className="rounded-full bg-white px-5 py-2 text-black shadow-md shadow-black/20">
-                    Start listening
-                  </Link>
-                  <Link href="/artists" className="rounded-full border border-white/40 px-5 py-2 text-white hover:bg-white/10">
-                    Browse artists
-                  </Link>
-                </div>
-              </div>
+          {/* Featured Video Section */}
+          <div className="relative h-64 w-full overflow-hidden rounded-3xl md:h-80 lg:h-96 xl:h-[400px]">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            >
+              <source src="/Rema/dark.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-              <div className="relative h-64 w-full overflow-hidden rounded-2xl md:h-80 lg:h-96 xl:h-[400px]">
-                {/* Music Pattern Background */}
-                <div className="absolute inset-0 z-0 opacity-20">
-                  <svg
-                    className="w-full h-full"
-                    viewBox="0 0 400 300"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* Guitar */}
-                    <path
-                      d="M50 80 C50 70, 60 60, 70 60 L90 60 C100 60, 110 70, 110 80 L110 120 C110 130, 100 140, 90 140 L70 140 C60 140, 50 130, 50 120 Z"
-                      stroke="white"
-                      strokeWidth="1"
-                      fill="none"
-                    />
-                    <line x1="55" y1="90" x2="105" y2="90" stroke="white" strokeWidth="0.5" />
-                    <line x1="55" y1="100" x2="105" y2="100" stroke="white" strokeWidth="0.5" />
-                    <line x1="55" y1="110" x2="105" y2="110" stroke="white" strokeWidth="0.5" />
-                    <line x1="55" y1="120" x2="105" y2="120" stroke="white" strokeWidth="0.5" />
+            {/* Dark overlay for text visibility */}
+            <div className="absolute inset-0 bg-black/40" />
 
-                    {/* Microphone */}
-                    <circle cx="250" cy="50" r="12" stroke="white" strokeWidth="1" fill="none" />
-                    <line x1="250" y1="62" x2="250" y2="100" stroke="white" strokeWidth="1.5" />
-                    <path d="M240 95 L260 95 L255 105 L245 105 Z" stroke="white" strokeWidth="1" fill="none" />
-
-                    {/* Musical Notes */}
-                    <circle cx="150" cy="200" r="6" fill="white" />
-                    <line x1="156" y1="200" x2="156" y2="170" stroke="white" strokeWidth="1.5" />
-                    <path d="M156 170 C170 165, 180 175, 165 180" stroke="white" strokeWidth="1" fill="none" />
-
-                    <circle cx="320" cy="180" r="5" fill="white" />
-                    <line x1="325" y1="180" x2="325" y2="155" stroke="white" strokeWidth="1" />
-
-                    {/* Headphones */}
-                    <path
-                      d="M300 120 C300 100, 320 80, 350 80 C380 80, 400 100, 400 120"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      fill="none"
-                    />
-                    <rect x="295" y="115" width="10" height="15" rx="3" stroke="white" strokeWidth="1" fill="none" />
-                    <rect x="395" y="115" width="10" height="15" rx="3" stroke="white" strokeWidth="1" fill="none" />
-
-                    {/* Vinyl Record */}
-                    <circle cx="80" cy="230" r="25" stroke="white" strokeWidth="1" fill="none" />
-                    <circle cx="80" cy="230" r="15" stroke="white" strokeWidth="0.5" fill="none" />
-                    <circle cx="80" cy="230" r="5" stroke="white" strokeWidth="0.5" fill="none" />
-                    <circle cx="80" cy="230" r="2" fill="white" />
-
-                    {/* Piano Keys */}
-                    <rect x="20" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
-                    <rect x="25" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
-                    <rect x="30" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
-                    <rect x="35" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
-                    <rect x="22.5" y="20" width="3" height="12" fill="white" />
-                    <rect x="32.5" y="20" width="3" height="12" fill="white" />
-
-                    {/* Speaker */}
-                    <rect x="350" y="240" width="30" height="40" rx="5" stroke="white" strokeWidth="1" fill="none" />
-                    <circle cx="365" cy="255" r="6" stroke="white" strokeWidth="0.5" fill="none" />
-                    <circle cx="365" cy="270" r="3" stroke="white" strokeWidth="0.5" fill="none" />
-
-                    {/* Large Guitar - Left Side */}
-                    <path
-                      d="M20 150 C20 130, 40 110, 60 110 L100 110 C120 110, 140 130, 140 150 L140 220 C140 240, 120 260, 100 260 L60 260 C40 260, 20 240, 20 220 Z"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      fill="none"
-                    />
-                    <line x1="30" y1="170" x2="130" y2="170" stroke="white" strokeWidth="0.8" />
-                    <line x1="30" y1="185" x2="130" y2="185" stroke="white" strokeWidth="0.8" />
-                    <line x1="30" y1="200" x2="130" y2="200" stroke="white" strokeWidth="0.8" />
-                    <line x1="30" y1="215" x2="130" y2="215" stroke="white" strokeWidth="0.8" />
-                    <line x1="30" y1="230" x2="130" y2="230" stroke="white" strokeWidth="0.8" />
-                    <line x1="30" y1="245" x2="130" y2="245" stroke="white" strokeWidth="0.8" />
-                    <circle cx="80" cy="200" r="15" stroke="white" strokeWidth="1" fill="none" />
-
-                    {/* Large Microphone - Left Top */}
-                    <circle cx="60" cy="50" r="20" stroke="white" strokeWidth="2" fill="none" />
-                    <line x1="60" y1="70" x2="60" y2="120" stroke="white" strokeWidth="2.5" />
-                    <path d="M45 115 L75 115 L70 130 L50 130 Z" stroke="white" strokeWidth="1.5" fill="none" />
-                    <circle cx="60" cy="50" r="8" stroke="white" strokeWidth="0.8" fill="none" />
-
-                    {/* Large Vinyl Record - Left Bottom */}
-                    <circle cx="120" cy="280" r="40" stroke="white" strokeWidth="1.5" fill="none" />
-                    <circle cx="120" cy="280" r="30" stroke="white" strokeWidth="0.8" fill="none" />
-                    <circle cx="120" cy="280" r="20" stroke="white" strokeWidth="0.8" fill="none" />
-                    <circle cx="120" cy="280" r="10" stroke="white" strokeWidth="0.8" fill="none" />
-                    <circle cx="120" cy="280" r="3" fill="white" />
-                    <text x="105" y="265" fill="white" fontSize="8" opacity="0.7">SPIIN</text>
-                  </svg>
-                </div>
-
-                <Image
-                  src="/Rema/orange.png"
-                  alt="SPIIN Featured Artist"
-                  fill
-                  className="object-contain object-right z-10"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-              </div>
+            {/* Content overlay */}
+            <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-12">
+              <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-brand-accent/20 to-emerald-500/20 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-brand-accent backdrop-blur-sm w-fit">
+                Featured
+              </span>
+              <h2 className="mb-4 text-3xl font-bold text-white lg:text-4xl">
+                SPIIN Spotlight
+              </h2>
+              <p className="text-lg text-white/90 max-w-2xl">
+                Discover the latest drops and support your favorite artists directly. Build playlists, follow music, and stay on top of the culture.
+              </p>
             </div>
           </div>
 
