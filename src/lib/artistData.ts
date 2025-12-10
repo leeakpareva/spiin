@@ -699,7 +699,7 @@ export const artistsData: Record<string, Artist> = {
   "oxlade": {
     id: "oxlade",
     name: "Oxlade",
-    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=640&q=80",
+    image: "/Oxlade/lade.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "2.9M",
     monthlyListeners: "1.8M",

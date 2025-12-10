@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function TeamPage() {
   return (
@@ -31,15 +32,13 @@ export default function TeamPage() {
           <section className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <div className="aspect-[3/4] rounded-3xl bg-gradient-to-br from-orange-500/20 to-emerald-500/20 border border-white/10 backdrop-blur-sm overflow-hidden">
-                {/* Placeholder for M.I Abaga's photo */}
-                <div className="w-full h-full bg-gradient-to-br from-orange-500/30 to-amber-500/30 flex items-center justify-center">
-                  <div className="text-center space-y-4">
-                    <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-black">MI</span>
-                    </div>
-                    <p className="text-sm text-white/60">M.I Abaga</p>
-                  </div>
-                </div>
+                <Image
+                  src="/mi.JPEG"
+                  alt="M.I Abaga"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
 
               {/* Floating badge */}
@@ -209,17 +208,13 @@ export default function TeamPage() {
 
             <div className="order-1 lg:order-2 relative">
               <div className="aspect-[3/4] rounded-3xl bg-gradient-to-br from-emerald-500/20 to-brand-accent/20 border border-white/10 backdrop-blur-sm overflow-hidden">
-                {/* Placeholder for Chopstix's photo */}
-                <div className="w-full h-full bg-gradient-to-br from-emerald-500/30 to-brand-accent/30 flex items-center justify-center">
-                  <div className="text-center space-y-4">
-                    <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-emerald-500 to-brand-accent flex items-center justify-center">
-                      <svg className="w-12 h-12 text-black" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <p className="text-sm text-white/60">Chopstix</p>
-                  </div>
-                </div>
+                <Image
+                  src="/choperstix.JPEG"
+                  alt="Chopstix"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
 
               {/* Floating badge */}

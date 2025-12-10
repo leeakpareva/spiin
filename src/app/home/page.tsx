@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import ScrollableSection from "@/components/scrollable-section";
 import MiniMusicPlayer from "@/components/mini-music-player";
@@ -58,7 +58,12 @@ const popularSongs = [
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
+
+  // Video sources array
+  const videos = ["/Rema/dark.mp4", "/Fireboy DML/alive.mp4"];
 
   // Filter artists based on search query
   const searchResults = useMemo(() => {
@@ -83,6 +88,18 @@ export default function Home() {
     setSearchQuery("");
     setShowSearchResults(false);
   };
+
+  // Handle video ended event to switch to next video
+  const handleVideoEnded = () => {
+    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
+  };
+
+  // Effect to update video source when currentVideoIndex changes
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load(); // Reload the video with new source
+    }
+  }, [currentVideoIndex]);
 
   return (
     <div className="bg-brand-900">
@@ -179,13 +196,14 @@ export default function Home() {
           {/* Featured Video Section */}
           <div className="relative h-64 w-full overflow-hidden rounded-3xl md:h-80 lg:h-96 xl:h-[400px]">
             <video
+              ref={videoRef}
               autoPlay
-              loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover object-top"
+              onEnded={handleVideoEnded}
+              className="absolute inset-0 w-full h-full object-cover object-center"
             >
-              <source src="/Rema/dark.mp4" type="video/mp4" />
+              <source src={videos[currentVideoIndex]} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
