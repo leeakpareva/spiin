@@ -13,6 +13,12 @@ interface Particle {
   depth: number;
 }
 
+// Deterministic pseudo-random number generator
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 export default function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -24,21 +30,23 @@ export default function FloatingParticles() {
   useEffect(() => {
     if (!isMounted) return;
 
-    // Create initial particles
+    // Create initial particles with deterministic values
     const createParticles = () => {
       const newParticles: Particle[] = [];
-      const particleCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 15 : 25; // Fewer on mobile
+      // Use a fixed count initially, then adjust if needed
+      const particleCount = 20; // Fixed count to avoid hydration mismatch
 
       for (let i = 0; i < particleCount; i++) {
+        const seed = i + 1;
         newParticles.push({
           id: i,
-          x: Math.random() * 100, // Percentage position
-          y: Math.random() * 100,
-          size: Math.random() * 40 + 20, // 20-60px rings
-          speedX: (Math.random() - 0.5) * 0.3, // Very slow movement
-          speedY: (Math.random() - 0.5) * 0.3,
-          opacity: Math.random() * 0.15 + 0.05, // 0.05-0.2 opacity (more visible but still subtle)
-          depth: Math.random() * 0.5 + 0.5, // 0.5-1 scale for depth
+          x: seededRandom(seed) * 100, // Percentage position
+          y: seededRandom(seed + 100) * 100,
+          size: seededRandom(seed + 200) * 40 + 20, // 20-60px rings
+          speedX: (seededRandom(seed + 300) - 0.5) * 0.3, // Very slow movement
+          speedY: (seededRandom(seed + 400) - 0.5) * 0.3,
+          opacity: seededRandom(seed + 500) * 0.15 + 0.05, // 0.05-0.2 opacity (more visible but still subtle)
+          depth: seededRandom(seed + 600) * 0.5 + 0.5, // 0.5-1 scale for depth
         });
       }
       setParticles(newParticles);
@@ -80,7 +88,7 @@ export default function FloatingParticles() {
             transform: `translate(-50%, -50%) scale(${particle.depth})`,
             borderWidth: `${Math.max(1, particle.depth * 1.5)}px`,
             boxShadow: `0 0 ${particle.size * 0.4}px rgba(255, 255, 255, ${particle.opacity * 0.5})`,
-            animation: `float ${15 + Math.random() * 10}s ease-in-out infinite alternate`,
+            animation: `float ${15 + seededRandom(particle.id + 700) * 10}s ease-in-out infinite alternate`,
           }}
         />
       ))}

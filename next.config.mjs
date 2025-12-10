@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // Allow cross-origin requests in development
+  allowedDevOrigins: ["http://192.168.0.18:3000", "http://localhost:3000"],
+
   // Image optimization
   images: {
     remotePatterns: [

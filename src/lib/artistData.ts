@@ -194,7 +194,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2023",
         streams: "112M",
         duration: "3:05",
-        cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       },
       {
         id: "2",
@@ -202,7 +204,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2023",
         streams: "95M",
         duration: "2:30",
-        cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       },
       {
         id: "3",
@@ -210,7 +214,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2023",
         streams: "88M",
         duration: "3:18",
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       }
     ],
     albums: [
@@ -252,7 +258,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2022",
         streams: "489M",
         duration: "3:39",
-        cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       },
       {
         id: "2",
@@ -260,7 +268,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2023",
         streams: "67M",
         duration: "3:05",
-        cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       },
       {
         id: "3",
@@ -268,7 +278,9 @@ export const artistsData: Record<string, Artist> = {
         releaseDate: "2023",
         streams: "54M",
         duration: "2:42",
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80"
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+        hasAudio: true,
+        hasVideo: false
       }
     ],
     albums: [
@@ -736,7 +748,7 @@ export const artistsData: Record<string, Artist> = {
   "ruger": {
     id: "ruger",
     name: "Ruger",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80",
+    image: "/Ruger/purple.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "3.1M",
     monthlyListeners: "1.9M",
@@ -773,7 +785,7 @@ export const artistsData: Record<string, Artist> = {
   "bnxn": {
     id: "bnxn",
     name: "BNXN",
-    image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=640&q=80",
+    image: "/BNXN/blackandspice.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "2.7M",
     monthlyListeners: "1.6M",

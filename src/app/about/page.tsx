@@ -10,9 +10,6 @@ export default function AboutPage() {
 
         <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
           <div className="text-center">
-            <div className="mb-8 inline-flex items-center rounded-full border border-orange-500/20 bg-orange-500/10 px-6 py-2 text-sm text-orange-300">
-              Artist-first platform
-            </div>
             <h1 className="text-6xl lg:text-8xl font-bold mb-8 bg-gradient-to-r from-white via-orange-200 to-amber-300 bg-clip-text text-transparent">
               About SPIIN
             </h1>

@@ -73,7 +73,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-col gap-2 md:gap-0">
               <div className="flex items-center gap-2">
-                <span>© {new Date().getFullYear()} SPIIN.</span>
+                <span>© 2024 SPIIN.</span>
                 <span className="text-emerald-400/70">Support artists directly.</span>
               </div>
               <div className="text-white/40">

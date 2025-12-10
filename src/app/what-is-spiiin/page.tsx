@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function WhatIsSpiiin() {
+export default function WhatIsSpiinin() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

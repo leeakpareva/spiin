@@ -227,12 +227,18 @@ export default function IntroAnimation() {
         return () => { clearTimeout(timer1); clearTimeout(timer2); };
     }, []);
 
-    // --- Random Scatter Positions ---
+    // --- Deterministic Scatter Positions ---
     const scatterPositions = useMemo(() => {
-        return IMAGES.map(() => ({
-            x: (Math.random() - 0.5) * 1500,
-            y: (Math.random() - 0.5) * 1000,
-            rotation: (Math.random() - 0.5) * 180,
+        // Deterministic pseudo-random number generator
+        const seededRandom = (seed: number) => {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        };
+
+        return IMAGES.map((_, index) => ({
+            x: (seededRandom(index + 1) - 0.5) * 1500,
+            y: (seededRandom(index + 100) - 0.5) * 1000,
+            rotation: (seededRandom(index + 200) - 0.5) * 180,
             scale: 0.6,
             opacity: 0,
         }));

@@ -43,11 +43,9 @@ export default function PlayerPage({ params }: PlayerPageProps) {
       id: song.id,
       title: song.title,
       artist: artist.name,
+      src: song.audioSrc || song.videoSrc || '',
       cover: song.cover,
-      audioSrc: song.audioSrc,
-      videoSrc: song.videoSrc,
-      hasAudio: song.hasAudio,
-      hasVideo: song.hasVideo
+      type: song.hasVideo ? 'video' : 'audio'
     });
   };
 
@@ -211,6 +209,7 @@ export default function PlayerPage({ params }: PlayerPageProps) {
                       src={currentSong.videoSrc}
                       poster={currentSong.cover}
                       title={currentSong.title}
+                      artist={artist.name}
                     />
                   ) : (
                     <div className="text-center py-12">

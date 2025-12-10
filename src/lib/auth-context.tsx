@@ -27,19 +27,32 @@ const mockUsers = [
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
+    setIsHydrated(true);
     // Check if user is logged in (from localStorage)
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          console.error('Error parsing stored user:', error);
+          localStorage.removeItem('user');
+        }
+      }
     }
+    setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     // Get all users (mock + dynamically added)
-    const dynamicUsers = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+    const dynamicUsers = typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem('mockUsers') || '[]')
+      : [];
     const allUsers = [...mockUsers, ...dynamicUsers];
 
     const foundUser = allUsers.find(
@@ -52,7 +65,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         name: foundUser.name,
         isAuthenticated: true
       };
-      localStorage.setItem('user', JSON.stringify(userData));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(userData));
+      }
       setUser(userData);
       return true;
     }
@@ -60,14 +75,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+    }
     setUser(null);
     router.push('/');
   };
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     // Check if user already exists
-    const dynamicUsers = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+    const dynamicUsers = typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem('mockUsers') || '[]')
+      : [];
     const allUsers = [...mockUsers, ...dynamicUsers];
 
     if (allUsers.find(u => u.email === email)) {
@@ -77,7 +96,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Add new user
     const newUser = { email, password, name };
     dynamicUsers.push(newUser);
-    localStorage.setItem('mockUsers', JSON.stringify(dynamicUsers));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('mockUsers', JSON.stringify(dynamicUsers));
+    }
 
     // Log them in
     const userData = {
@@ -85,7 +106,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       name,
       isAuthenticated: true
     };
-    localStorage.setItem('user', JSON.stringify(userData));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(userData));
+    }
     setUser(userData);
     return true;
   };
