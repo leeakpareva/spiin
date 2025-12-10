@@ -201,7 +201,7 @@ export default function Home() {
               muted
               playsInline
               onEnded={handleVideoEnded}
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className={`absolute inset-0 w-full h-full object-cover ${videos[currentVideoIndex].includes('dark') ? 'object-top' : 'object-center'}`}
             >
               <source src={videos[currentVideoIndex]} type="video/mp4" />
               Your browser does not support the video tag.
