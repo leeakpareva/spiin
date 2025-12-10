@@ -38,6 +38,9 @@ export default function Header() {
           <Link href="/artists" className="text-white/80 hover:text-brand-accent transition-colors">
             Artists
           </Link>
+          <Link href="/what-is-spiiin" className="text-white/80 hover:text-brand-accent transition-colors">
+            What is Spiiin
+          </Link>
           <Link href="/about" className="text-white/80 hover:text-brand-accent transition-colors">
             About
           </Link>
@@ -94,6 +97,9 @@ export default function Header() {
             </Link>
             <Link href="/artists" className="py-2 text-sm text-white/80">
               Artists
+            </Link>
+            <Link href="/what-is-spiiin" className="py-2 text-sm text-white/80">
+              What is Spiiin
             </Link>
             <Link href="/about" className="py-2 text-sm text-white/80">
               About

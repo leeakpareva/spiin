@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+import { usePayment } from "@/lib/payment-context";
 
 // Mock user data for development
 const mockUsers = [
@@ -13,10 +15,20 @@ const mockUsers = [
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { login } = useAuth();
+  const { upgradeSubscription } = usePayment();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("free");
+
+  useEffect(() => {
+    const plan = searchParams.get('plan') || 'free';
+    setSelectedPlan(plan);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,23 +38,23 @@ export default function LoginPage() {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Mock authentication
-    const user = mockUsers.find(
-      u => u.email === email && u.password === password
-    );
+    try {
+      // Use auth context login
+      const success = await login(email, password);
 
-    if (user) {
-      // Store user data in localStorage (for development only)
-      localStorage.setItem("user", JSON.stringify({
-        email: user.email,
-        name: user.name,
-        isAuthenticated: true
-      }));
+      if (success) {
+        // Set subscription plan if premium was selected
+        if (selectedPlan === "premium") {
+          await upgradeSubscription("premium");
+        }
 
-      // Redirect to home page
-      router.push("/");
-    } else {
-      setError("Invalid email or password");
+        // Redirect to home page
+        router.push("/home");
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (err) {
+      setError("Login failed. Please try again.");
     }
 
     setIsLoading(false);
@@ -54,7 +66,17 @@ export default function LoginPage() {
         <div className="bg-brand-800/60 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl shadow-black/50 p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
-            <p className="text-white/60">Log in to continue to SPIIN</p>
+            <p className="text-white/60">
+              {selectedPlan === 'premium'
+                ? 'Log in to continue with SPIIN Premium'
+                : 'Log in to continue to SPIIN'}
+            </p>
+            {selectedPlan === 'premium' && (
+              <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-sm font-bold">
+                <span>⭐</span>
+                Premium Plan Selected
+              </div>
+            )}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">

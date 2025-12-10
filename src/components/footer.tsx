@@ -4,75 +4,68 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/5 bg-brand-900/95 mt-auto">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8">
-        <div className="grid gap-6 md:grid-cols-4">
-          {/* Company */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Company</h3>
-            <div className="flex flex-col gap-2 text-xs text-white/60">
-              <Link href="/about" className="hover:text-brand-accent transition-colors">
-                About SPIIN
-              </Link>
-              <Link href="/team" className="hover:text-brand-accent transition-colors">
-                Meet the Team
-              </Link>
-              <Link href="/press" className="hover:text-brand-accent transition-colors">
-                Press
-              </Link>
-              <Link href="/careers" className="hover:text-brand-accent transition-colors">
-                Careers
-              </Link>
-            </div>
+        {/* Main Footer Content - Side by Side */}
+        <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs text-white/60">
+          {/* Company Links */}
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <span className="font-semibold text-white text-sm">Company:</span>
+            <Link href="/about" className="hover:text-brand-accent transition-colors">
+              About SPIIN
+            </Link>
+            <Link href="/team" className="hover:text-brand-accent transition-colors">
+              Meet the Team
+            </Link>
+            <Link href="/press" className="hover:text-brand-accent transition-colors">
+              Press
+            </Link>
+            <Link href="/careers" className="hover:text-brand-accent transition-colors">
+              Careers
+            </Link>
           </div>
 
-          {/* Artists */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Artists</h3>
-            <div className="flex flex-col gap-2 text-xs text-white/60">
-              <Link href="/for-artists" className="hover:text-brand-accent transition-colors">
-                Join SPIIN
-              </Link>
-              <Link href="/artist-resources" className="hover:text-brand-accent transition-colors">
-                Resources
-              </Link>
-              <Link href="/artist-support" className="hover:text-brand-accent transition-colors">
-                Support
-              </Link>
-            </div>
+          {/* Artists Links */}
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <span className="font-semibold text-white text-sm">Artists:</span>
+            <Link href="/for-artists" className="hover:text-brand-accent transition-colors">
+              Join SPIIN
+            </Link>
+            <Link href="/artist-resources" className="hover:text-brand-accent transition-colors">
+              Resources
+            </Link>
+            <Link href="/artist-support" className="hover:text-brand-accent transition-colors">
+              Support
+            </Link>
           </div>
 
-          {/* Fans */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Fans</h3>
-            <div className="flex flex-col gap-2 text-xs text-white/60">
-              <Link href="/how-it-works" className="hover:text-brand-accent transition-colors">
-                How It Works
-              </Link>
-              <Link href="/gift-cards" className="hover:text-brand-accent transition-colors">
-                Gift Cards
-              </Link>
-              <Link href="/support" className="hover:text-brand-accent transition-colors">
-                Support
-              </Link>
-            </div>
+          {/* Fans Links */}
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <span className="font-semibold text-white text-sm">Fans:</span>
+            <Link href="/how-it-works" className="hover:text-brand-accent transition-colors">
+              How It Works
+            </Link>
+            <Link href="/gift-cards" className="hover:text-brand-accent transition-colors">
+              Gift Cards
+            </Link>
+            <Link href="/support" className="hover:text-brand-accent transition-colors">
+              Support
+            </Link>
           </div>
 
-          {/* Connect */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Connect</h3>
-            <div className="flex flex-col gap-2 text-xs text-white/60">
-              <Link href="https://instagram.com" className="hover:text-brand-accent transition-colors">
-                Instagram
-              </Link>
-              <Link href="https://twitter.com" className="hover:text-brand-accent transition-colors">
-                X (Twitter)
-              </Link>
-              <Link href="https://tiktok.com" className="hover:text-brand-accent transition-colors">
-                TikTok
-              </Link>
-              <Link href="https://youtube.com" className="hover:text-brand-accent transition-colors">
-                YouTube
-              </Link>
-            </div>
+          {/* Social Links */}
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <span className="font-semibold text-white text-sm">Connect:</span>
+            <Link href="https://instagram.com" className="hover:text-brand-accent transition-colors">
+              Instagram
+            </Link>
+            <Link href="https://twitter.com" className="hover:text-brand-accent transition-colors">
+              X (Twitter)
+            </Link>
+            <Link href="https://tiktok.com" className="hover:text-brand-accent transition-colors">
+              TikTok
+            </Link>
+            <Link href="https://youtube.com" className="hover:text-brand-accent transition-colors">
+              YouTube
+            </Link>
           </div>
         </div>
 

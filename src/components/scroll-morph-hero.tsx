@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { artistsData } from "@/lib/artistData";
 
 // --- Utility ---
 // function cn(...inputs: ClassValue[]) {
@@ -100,37 +101,11 @@ function FlipCard({
 const TOTAL_IMAGES = 20;
 const MAX_SCROLL = 3000; // Virtual scroll range
 
-// Music-themed Unsplash Images
-const IMAGES = [
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Recording studio
-    "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&q=80", // Concert crowd
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=80", // Microphone
-    "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&q=80", // Vinyl records
-    "https://images.unsplash.com/photo-1484755560615-676859b15fd3?w=300&q=80", // Headphones
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Studio mixing
-    "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=300&q=80", // Guitar performance
-    "https://images.unsplash.com/photo-1501612780327-45045538702b?w=300&q=80", // Live performance
-    "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80", // DJ booth
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Audio equipment
-    "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&q=80", // Band performance
-    "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=300&q=80", // Music festival
-    "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=300&q=80", // Piano keys
-    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80", // Concert lighting
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Sound waves
-    "https://images.unsplash.com/photo-1569982175971-d92b01cf8694?w=300&q=80", // Drum kit
-    "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&q=80", // Stage performance
-    "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=300&q=80", // Music production
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=80", // Artist recording
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80", // Music studio
-];
+// Get all artist images from artistData
+const IMAGES = Object.values(artistsData).map(artist => artist.image);
 
-// Map each image to an artist ID - all 20 artists
-const ARTIST_IDS = [
-    "davido", "burna-boy", "asake", "rema", "shallipopi",
-    "seyi-vibez", "odumodu-blvck", "wizkid", "tiwa-savage", "kizz-daniel",
-    "fireboy-dml", "omah-lay", "joeboy", "oxlade", "ruger",
-    "bnxn", "victony", "zinoleesky", "mohbad", "young-jonn"
-];
+// Get all artist IDs from artistData
+const ARTIST_IDS = Object.keys(artistsData);
 
 // Helper for linear interpolation
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t;

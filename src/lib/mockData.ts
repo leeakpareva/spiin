@@ -1,4 +1,5 @@
 import { ContentCardProps } from "@/components/content-card";
+import { artistsData } from "@/lib/artistData";
 
 export const discovered: ContentCardProps[] = [
   {
@@ -115,36 +116,14 @@ export const powered: ContentCardProps[] = [
   }
 ];
 
-export const artists: ContentCardProps[] = [
-  {
-    id: "artist1",
-    title: "Jasmine Carter",
-    subtitle: "Neo-Soul · 2.3M fans",
-    imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
-    type: "artist"
-  },
-  {
-    id: "artist2",
-    title: "The Neon Collective",
-    subtitle: "Electronic · 1.8M fans",
-    imageUrl: "https://images.unsplash.com/photo-1549834125-82d3c48159a3?w=400",
-    type: "artist"
-  },
-  {
-    id: "artist3",
-    title: "Marcus Vale",
-    subtitle: "Hip-Hop · 5.1M fans",
-    imageUrl: "https://images.unsplash.com/photo-1546456073-ea246a7bd25f?w=400",
-    type: "artist"
-  },
-  {
-    id: "artist4",
-    title: "Luna Rivers",
-    subtitle: "Indie Pop · 892K fans",
-    imageUrl: "https://images.unsplash.com/photo-1513379733131-47fc74b45fc7?w=400",
-    type: "artist"
-  }
-];
+export const artists: ContentCardProps[] = Object.values(artistsData).map(artist => ({
+  id: artist.id,
+  title: artist.name,
+  subtitle: `${artist.genre} · ${artist.followers} followers`,
+  imageUrl: artist.image,
+  type: "artist" as const,
+  artistId: artist.id
+}));
 
 export const songDetails = {
   song1: {

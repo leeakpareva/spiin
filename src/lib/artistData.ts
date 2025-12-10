@@ -407,7 +407,7 @@ export const artistsData: Record<string, Artist> = {
   "odumodu-blvck": {
     id: "odumodu-blvck",
     name: "ODUMODU BLVCK",
-    image: "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=640&q=80",
+    image: "/OdumoduBlvk/odu.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "3.1M",
     monthlyListeners: "2.5M",
@@ -466,7 +466,7 @@ export const artistsData: Record<string, Artist> = {
   "wizkid": {
     id: "wizkid",
     name: "Wizkid",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=640&q=80",
+    image: "/Wizzy/kid.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "18.3M",
     monthlyListeners: "12.5M",
@@ -514,7 +514,7 @@ export const artistsData: Record<string, Artist> = {
   "tiwa-savage": {
     id: "tiwa-savage",
     name: "Tiwa Savage",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=640&q=80",
+    image: "/Tiwa Savage/bootsbrown.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "8.9M",
     monthlyListeners: "5.2M",
@@ -551,7 +551,7 @@ export const artistsData: Record<string, Artist> = {
   "kizz-daniel": {
     id: "kizz-daniel",
     name: "Kizz Daniel",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=640&q=80",
+    image: "/Kizz Daniel/kizzy.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "6.8M",
     monthlyListeners: "4.3M",
@@ -588,7 +588,7 @@ export const artistsData: Record<string, Artist> = {
   "fireboy-dml": {
     id: "fireboy-dml",
     name: "Fireboy DML",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
+    image: "/Fireboy DML/culture.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "5.7M",
     monthlyListeners: "3.8M",
@@ -625,7 +625,7 @@ export const artistsData: Record<string, Artist> = {
   "omah-lay": {
     id: "omah-lay",
     name: "Omah Lay",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
+    image: "/Omar Lay/smile.png",
     coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80",
     followers: "4.2M",
     monthlyListeners: "2.9M",

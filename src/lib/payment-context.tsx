@@ -101,7 +101,10 @@ const SUBSCRIPTION_PLANS: Subscription[] = [
       "Artist meet & greet opportunities",
       "Support artists directly with tips",
       "Access to premium albums",
-      "Exclusive live sessions"
+      "Exclusive live sessions",
+      "VIP access to SPIIN Events",
+      "Priority customer support",
+      "Exclusive merchandise discounts"
     ],
     isActive: false
   }

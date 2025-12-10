@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import ScrollableSection from "@/components/scrollable-section";
+import MiniMusicPlayer from "@/components/mini-music-player";
 import { artistsData } from "@/lib/artistData";
 
 // Convert artistData to array format for home page with all 20 artists
@@ -51,6 +56,34 @@ const popularSongs = [
 ];
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const router = useRouter();
+
+  // Filter artists based on search query
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+
+    return artists.filter(artist =>
+      artist.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ).slice(0, 5); // Limit to 5 results
+  }, [searchQuery]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchResults.length > 0) {
+      router.push(`/artist/${searchResults[0].id}`);
+      setSearchQuery("");
+      setShowSearchResults(false);
+    }
+  };
+
+  const handleArtistSelect = (artistId: string) => {
+    router.push(`/artist/${artistId}`);
+    setSearchQuery("");
+    setShowSearchResults(false);
+  };
+
   return (
     <div className="bg-brand-900">
       <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-6 lg:pt-10">
@@ -59,51 +92,85 @@ export default function Home() {
           <div className="rounded-2xl border border-white/5 bg-brand-800/60 p-3 shadow-lg shadow-black/25">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
               <div className="flex items-center gap-2">
-                <button className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 hover:bg-brand-600">
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-brand-700 hover:bg-brand-600">
+                  <svg className="h-4 w-4 md:h-5 md:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 20c0-2.21 2.686-4 6-4s6 1.79 6 4" />
                   </svg>
                 </button>
                 <Link
                   href="/"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-md shadow-black/30"
+                  className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white text-black shadow-md shadow-black/30"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-4 w-4 md:h-5 md:w-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.707 1.293a1 1 0 00-1.414 0l-8 8a1 1 0 001.414 1.414L3 10.414V17a1 1 0 001 1h4v-4h4v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-8-8z" />
                   </svg>
                 </Link>
               </div>
 
-              <div className="flex flex-1 items-center gap-3 rounded-full bg-brand-700 px-3 py-2 text-sm ring-1 ring-white/10">
-                <svg className="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="What do you want to play?"
-                  className="w-full bg-transparent text-sm text-white placeholder:text-white/60 outline-none"
-                />
-                <button className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600/80 text-white hover:bg-brand-500/70">
-                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M3 5a2 2 0 012-2h10a2 2 0 012 2v2H3V5z" />
-                    <path fillRule="evenodd" d="M4 9h12v4a2 2 0 01-2 2H6a2 2 0 01-2-2V9zm3 3a1 1 0 000 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+              <div className="relative flex-1">
+                <form onSubmit={handleSearchSubmit} className="flex items-center gap-3 rounded-full bg-brand-700 px-3 py-2 text-sm ring-1 ring-white/10">
+                  <svg className="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                </button>
+                  <input
+                    type="text"
+                    placeholder="Search for artists..."
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setShowSearchResults(true);
+                    }}
+                    onFocus={() => setShowSearchResults(true)}
+                    onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
+                    className="w-full bg-transparent text-sm text-white placeholder:text-white/60 outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600/80 text-white hover:bg-brand-500/70"
+                  >
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </button>
+                </form>
+
+                {/* Search Results Dropdown */}
+                {showSearchResults && searchQuery && searchResults.length > 0 && (
+                  <div className="absolute top-full mt-2 w-full bg-brand-800 border border-white/10 rounded-xl shadow-xl z-50">
+                    {searchResults.map((artist) => (
+                      <button
+                        key={artist.id}
+                        onClick={() => handleArtistSelect(artist.id)}
+                        className="w-full flex items-center gap-3 p-3 hover:bg-brand-700 first:rounded-t-xl last:rounded-b-xl transition-colors"
+                      >
+                        <Image
+                          src={artist.image}
+                          alt={artist.name}
+                          width={40}
+                          height={40}
+                          className="rounded-full object-cover"
+                        />
+                        <div className="text-left">
+                          <div className="text-sm font-medium text-white">{artist.name}</div>
+                          <div className="text-xs text-white/60">{artist.followers} followers</div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* No Results */}
+                {showSearchResults && searchQuery && searchResults.length === 0 && (
+                  <div className="absolute top-full mt-2 w-full bg-brand-800 border border-white/10 rounded-xl shadow-xl z-50 p-3">
+                    <div className="text-sm text-white/60 text-center">No artists found</div>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-3 text-sm">
-                <Link href="/install" className="hidden text-white/70 hover:text-white md:inline">
+                <Link href="/install" className="text-white/70 hover:text-white">
                   Install App
-                </Link>
-                <Link href="/signup" className="hidden font-semibold text-white hover:text-brand-accent md:inline">
-                  Sign up
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-4 py-2 font-semibold text-white hover:border-white/40"
-                >
-                  Log in
                 </Link>
               </div>
             </div>
@@ -128,15 +195,107 @@ export default function Home() {
               </div>
 
               <div className="relative h-64 w-full overflow-hidden rounded-2xl md:h-80 lg:h-96 xl:h-[400px]">
+                {/* Music Pattern Background */}
+                <div className="absolute inset-0 z-0 opacity-20">
+                  <svg
+                    className="w-full h-full"
+                    viewBox="0 0 400 300"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Guitar */}
+                    <path
+                      d="M50 80 C50 70, 60 60, 70 60 L90 60 C100 60, 110 70, 110 80 L110 120 C110 130, 100 140, 90 140 L70 140 C60 140, 50 130, 50 120 Z"
+                      stroke="white"
+                      strokeWidth="1"
+                      fill="none"
+                    />
+                    <line x1="55" y1="90" x2="105" y2="90" stroke="white" strokeWidth="0.5" />
+                    <line x1="55" y1="100" x2="105" y2="100" stroke="white" strokeWidth="0.5" />
+                    <line x1="55" y1="110" x2="105" y2="110" stroke="white" strokeWidth="0.5" />
+                    <line x1="55" y1="120" x2="105" y2="120" stroke="white" strokeWidth="0.5" />
+
+                    {/* Microphone */}
+                    <circle cx="250" cy="50" r="12" stroke="white" strokeWidth="1" fill="none" />
+                    <line x1="250" y1="62" x2="250" y2="100" stroke="white" strokeWidth="1.5" />
+                    <path d="M240 95 L260 95 L255 105 L245 105 Z" stroke="white" strokeWidth="1" fill="none" />
+
+                    {/* Musical Notes */}
+                    <circle cx="150" cy="200" r="6" fill="white" />
+                    <line x1="156" y1="200" x2="156" y2="170" stroke="white" strokeWidth="1.5" />
+                    <path d="M156 170 C170 165, 180 175, 165 180" stroke="white" strokeWidth="1" fill="none" />
+
+                    <circle cx="320" cy="180" r="5" fill="white" />
+                    <line x1="325" y1="180" x2="325" y2="155" stroke="white" strokeWidth="1" />
+
+                    {/* Headphones */}
+                    <path
+                      d="M300 120 C300 100, 320 80, 350 80 C380 80, 400 100, 400 120"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                    <rect x="295" y="115" width="10" height="15" rx="3" stroke="white" strokeWidth="1" fill="none" />
+                    <rect x="395" y="115" width="10" height="15" rx="3" stroke="white" strokeWidth="1" fill="none" />
+
+                    {/* Vinyl Record */}
+                    <circle cx="80" cy="230" r="25" stroke="white" strokeWidth="1" fill="none" />
+                    <circle cx="80" cy="230" r="15" stroke="white" strokeWidth="0.5" fill="none" />
+                    <circle cx="80" cy="230" r="5" stroke="white" strokeWidth="0.5" fill="none" />
+                    <circle cx="80" cy="230" r="2" fill="white" />
+
+                    {/* Piano Keys */}
+                    <rect x="20" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
+                    <rect x="25" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
+                    <rect x="30" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
+                    <rect x="35" y="20" width="5" height="20" stroke="white" strokeWidth="0.5" fill="none" />
+                    <rect x="22.5" y="20" width="3" height="12" fill="white" />
+                    <rect x="32.5" y="20" width="3" height="12" fill="white" />
+
+                    {/* Speaker */}
+                    <rect x="350" y="240" width="30" height="40" rx="5" stroke="white" strokeWidth="1" fill="none" />
+                    <circle cx="365" cy="255" r="6" stroke="white" strokeWidth="0.5" fill="none" />
+                    <circle cx="365" cy="270" r="3" stroke="white" strokeWidth="0.5" fill="none" />
+
+                    {/* Large Guitar - Left Side */}
+                    <path
+                      d="M20 150 C20 130, 40 110, 60 110 L100 110 C120 110, 140 130, 140 150 L140 220 C140 240, 120 260, 100 260 L60 260 C40 260, 20 240, 20 220 Z"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                    <line x1="30" y1="170" x2="130" y2="170" stroke="white" strokeWidth="0.8" />
+                    <line x1="30" y1="185" x2="130" y2="185" stroke="white" strokeWidth="0.8" />
+                    <line x1="30" y1="200" x2="130" y2="200" stroke="white" strokeWidth="0.8" />
+                    <line x1="30" y1="215" x2="130" y2="215" stroke="white" strokeWidth="0.8" />
+                    <line x1="30" y1="230" x2="130" y2="230" stroke="white" strokeWidth="0.8" />
+                    <line x1="30" y1="245" x2="130" y2="245" stroke="white" strokeWidth="0.8" />
+                    <circle cx="80" cy="200" r="15" stroke="white" strokeWidth="1" fill="none" />
+
+                    {/* Large Microphone - Left Top */}
+                    <circle cx="60" cy="50" r="20" stroke="white" strokeWidth="2" fill="none" />
+                    <line x1="60" y1="70" x2="60" y2="120" stroke="white" strokeWidth="2.5" />
+                    <path d="M45 115 L75 115 L70 130 L50 130 Z" stroke="white" strokeWidth="1.5" fill="none" />
+                    <circle cx="60" cy="50" r="8" stroke="white" strokeWidth="0.8" fill="none" />
+
+                    {/* Large Vinyl Record - Left Bottom */}
+                    <circle cx="120" cy="280" r="40" stroke="white" strokeWidth="1.5" fill="none" />
+                    <circle cx="120" cy="280" r="30" stroke="white" strokeWidth="0.8" fill="none" />
+                    <circle cx="120" cy="280" r="20" stroke="white" strokeWidth="0.8" fill="none" />
+                    <circle cx="120" cy="280" r="10" stroke="white" strokeWidth="0.8" fill="none" />
+                    <circle cx="120" cy="280" r="3" fill="white" />
+                    <text x="105" y="265" fill="white" fontSize="8" opacity="0.7">SPIIN</text>
+                  </svg>
+                </div>
+
                 <Image
-                  src="/rema.png"
-                  alt="Rema"
+                  src="/Rema/orange.png"
+                  alt="SPIIN Featured Artist"
                   fill
-                  className="object-cover object-center z-10"
+                  className="object-contain object-right z-10"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-700/30 to-brand-900/30 z-20" />
               </div>
             </div>
           </div>
@@ -196,6 +355,9 @@ export default function Home() {
           </ScrollableSection>
         </div>
       </div>
+
+      {/* Mini Music Player */}
+      <MiniMusicPlayer audioSrc="/Wahala 4.mp3" title="Wahala 4" />
     </div>
   );
 }

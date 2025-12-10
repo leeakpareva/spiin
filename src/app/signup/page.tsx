@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { usePayment, Subscription } from "@/lib/payment-context";
@@ -9,6 +9,8 @@ import { Check, Star, Music } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,6 +23,11 @@ export default function SignupPage() {
 
   const { signup } = useAuth();
   const { availableSubscriptions, upgradeSubscription } = usePayment();
+
+  useEffect(() => {
+    const plan = searchParams.get('plan') || 'free';
+    setSelectedPlan(plan);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +58,7 @@ export default function SignupPage() {
         }
 
         // Redirect to home page
-        router.push("/");
+        router.push("/home");
       } else {
         setError("Account with this email already exists");
       }

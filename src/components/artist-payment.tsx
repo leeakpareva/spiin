@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePayment } from '@/lib/payment-context';
 import { useAuth } from '@/lib/auth-context';
-import { Heart, Gift, ShoppingBag, Star, X, DollarSign } from 'lucide-react';
+import { Heart, Gift, ShoppingBag, Star, X, DollarSign, Music, Calendar, MessageCircle } from 'lucide-react';
 import { getArtistById } from '@/lib/artistData';
 
 interface ArtistPaymentProps {
@@ -11,50 +11,60 @@ interface ArtistPaymentProps {
 }
 
 export default function ArtistPayment({ artistId }: ArtistPaymentProps) {
-  const { tipArtist, giftToArtist, buyAlbum, hasAccess, isPaidUser } = usePayment();
+  const { tipArtist, giftToArtist, buyAlbum, isPaidUser } = usePayment();
   const { user } = useAuth();
   const [activeModal, setActiveModal] = useState<'tip' | 'gift' | 'album' | null>(null);
   const [amount, setAmount] = useState(5);
   const [customAmount, setCustomAmount] = useState('');
   const [message, setMessage] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const artist = getArtistById(artistId);
   if (!artist) return null;
 
-  const handleTip = () => {
+  const handleTip = async () => {
+    setIsProcessing(true);
     const tipAmount = customAmount ? parseFloat(customAmount) : amount;
     if (tipAmount > 0) {
-      tipArtist(artistId, tipAmount, message);
+      await tipArtist(artistId, tipAmount, message);
       setActiveModal(null);
       setMessage('');
       setCustomAmount('');
     }
+    setIsProcessing(false);
   };
 
-  const handleGift = () => {
+  const handleGift = async () => {
+    setIsProcessing(true);
     const giftAmount = customAmount ? parseFloat(customAmount) : amount;
     if (giftAmount > 0) {
-      giftToArtist(artistId, giftAmount, message);
+      await giftToArtist(artistId, giftAmount, message);
       setActiveModal(null);
       setMessage('');
       setCustomAmount('');
     }
+    setIsProcessing(false);
   };
 
-  const handleBuyAlbum = (albumId: string, price: number) => {
-    buyAlbum(albumId, artistId, price);
+  const handleBuyAlbum = async (albumId: string, price: number) => {
+    setIsProcessing(true);
+    await buyAlbum(albumId, artistId, price);
     setActiveModal(null);
+    setIsProcessing(false);
   };
 
   const predefinedAmounts = [5, 10, 25, 50, 100];
 
-  const Modal = ({ children, onClose }: { children: React.ReactNode; onClose: () => void }) => (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-brand-800 rounded-2xl p-6 max-w-md w-full">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">Support {artist.name}</h3>
-          <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full">
-            <X size={20} />
+  const Modal = ({ children, onClose, title }: { children: React.ReactNode; onClose: () => void; title: string }) => (
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-gradient-to-br from-brand-800 to-brand-700 border border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-white">{title}</h3>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+          >
+            <X size={20} className="text-white/60" />
           </button>
         </div>
         {children}
@@ -62,132 +72,189 @@ export default function ArtistPayment({ artistId }: ArtistPaymentProps) {
     </div>
   );
 
-  if (!user) {
-    return (
-      <div className="bg-brand-800/40 rounded-2xl p-6 text-center">
-        <p className="text-white/60 mb-4">Login to support this artist</p>
-        <button className="bg-brand-accent text-white px-6 py-2 rounded-full font-semibold">
-          Login
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-4">
-      {/* Payment Options */}
-      <div className="bg-brand-800/40 rounded-2xl p-6">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <Heart size={20} className="text-red-500" />
-          Support {artist.name}
-        </h3>
+    <div className="space-y-6">
+      {/* Artist Support Header */}
+      <div className="text-center space-y-3">
+        <div className="flex items-center justify-center gap-3">
+          <Heart size={24} className="text-red-500" />
+          <h2 className="text-2xl font-bold text-white">Support {artist.name}</h2>
+        </div>
+        <p className="text-white/60 max-w-md mx-auto">
+          Show your appreciation and help {artist.name} continue creating amazing music
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {/* Tip Artist */}
-          <button
-            onClick={() => setActiveModal('tip')}
-            className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-500 hover:to-emerald-500 transition-all"
-          >
-            <DollarSign size={20} />
-            <div className="text-left">
-              <div className="font-semibold">Tip Artist</div>
-              <div className="text-sm opacity-90">Show appreciation</div>
+      {/* Payment Options Grid */}
+      <div className="grid gap-4">
+        {/* Tip Artist */}
+        <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl p-6 hover:from-green-500/30 hover:to-emerald-500/30 transition-all">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-green-500 rounded-full">
+                <DollarSign size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Tip Artist</h3>
+                <p className="text-green-300 text-sm">Show direct appreciation</p>
+              </div>
             </div>
-          </button>
+            <button
+              onClick={() => setActiveModal('tip')}
+              className="bg-green-500 hover:bg-green-400 text-white px-6 py-2 rounded-full font-medium transition-colors"
+            >
+              Tip Now
+            </button>
+          </div>
+          <p className="text-white/70 text-sm">
+            Send a direct tip to {artist.name} to show your support for their music.
+          </p>
+        </div>
 
-          {/* Gift */}
-          <button
-            onClick={() => setActiveModal('gift')}
-            className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl hover:from-purple-500 hover:to-pink-500 transition-all"
-          >
-            <Gift size={20} />
-            <div className="text-left">
-              <div className="font-semibold">Send Gift</div>
-              <div className="text-sm opacity-90">Special message</div>
+        {/* Send Gift */}
+        <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6 hover:from-purple-500/30 hover:to-pink-500/30 transition-all">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+                <Gift size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Send Gift</h3>
+                <p className="text-purple-300 text-sm">Special message included</p>
+              </div>
             </div>
-          </button>
+            <button
+              onClick={() => setActiveModal('gift')}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white px-6 py-2 rounded-full font-medium transition-colors"
+            >
+              Send Gift
+            </button>
+          </div>
+          <p className="text-white/70 text-sm">
+            Send a gift with a personal message to make it extra special.
+          </p>
+        </div>
 
-          {/* Buy Albums */}
-          <button
-            onClick={() => setActiveModal('album')}
-            className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl hover:from-blue-500 hover:to-cyan-500 transition-all"
-          >
-            <ShoppingBag size={20} />
-            <div className="text-left">
-              <div className="font-semibold">Buy Albums</div>
-              <div className="text-sm opacity-90">Support directly</div>
+        {/* Buy Albums */}
+        <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-2xl p-6 hover:from-blue-500/30 hover:to-cyan-500/30 transition-all">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full">
+                <Music size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Buy Albums</h3>
+                <p className="text-blue-300 text-sm">Support with purchases</p>
+              </div>
             </div>
-          </button>
+            <button
+              onClick={() => setActiveModal('album')}
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-6 py-2 rounded-full font-medium transition-colors"
+            >
+              Browse
+            </button>
+          </div>
+          <p className="text-white/70 text-sm">
+            Purchase {artist.name}'s albums and help them earn directly from their art.
+          </p>
         </div>
       </div>
 
-      {/* Premium Features */}
+      {/* Premium Features Upsell */}
       {!isPaidUser && (
-        <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-2xl p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <Star className="text-yellow-300" size={24} />
-            <h3 className="text-lg font-semibold">Upgrade to SPIIN Premium</h3>
+        <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-2 border-yellow-500/40 rounded-2xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full">
+              <Star size={20} className="text-black" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-white mb-2">🌟 SPIIN Premium</h3>
+              <p className="text-yellow-200 mb-4">
+                Unlock exclusive features and support artists even more effectively
+              </p>
+              <div className="grid md:grid-cols-3 gap-3 mb-4">
+                <div className="flex items-center gap-2 text-sm text-white/80">
+                  <MessageCircle size={14} className="text-yellow-400" />
+                  <span>Direct messaging</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-white/80">
+                  <Calendar size={14} className="text-yellow-400" />
+                  <span>VIP Events access</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-white/80">
+                  <Music size={14} className="text-yellow-400" />
+                  <span>Exclusive content</span>
+                </div>
+              </div>
+              <button className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-6 py-3 rounded-full font-bold hover:from-yellow-400 hover:to-orange-400 transition-colors">
+                Upgrade to Premium - $10/month
+              </button>
+            </div>
           </div>
-          <p className="text-sm opacity-90 mb-4">
-            Get unlimited access to tip artists, exclusive content, and premium features for just $10/month
-          </p>
-          <button className="bg-white text-orange-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-            Upgrade Now
-          </button>
         </div>
       )}
 
       {/* Tip Modal */}
       {activeModal === 'tip' && (
-        <Modal onClose={() => setActiveModal(null)}>
-          <div className="space-y-4">
+        <Modal onClose={() => setActiveModal(null)} title={`Tip ${artist.name}`}>
+          <div className="space-y-6">
             <div className="text-center">
-              <DollarSign size={32} className="mx-auto text-green-500 mb-2" />
-              <p className="text-sm text-white/70">Show your appreciation with a tip</p>
+              <div className="w-16 h-16 mx-auto mb-3 bg-green-500/20 rounded-full flex items-center justify-center">
+                <DollarSign size={24} className="text-green-400" />
+              </div>
+              <p className="text-white/70">Choose an amount to tip {artist.name}</p>
             </div>
 
-            <div className="grid grid-cols-5 gap-2">
-              {predefinedAmounts.map((preset) => (
-                <button
-                  key={preset}
-                  onClick={() => { setAmount(preset); setCustomAmount(''); }}
-                  className={`p-2 rounded-lg text-sm font-semibold transition-colors ${
-                    amount === preset && !customAmount
-                      ? 'bg-green-600 text-white'
-                      : 'bg-brand-700 hover:bg-brand-600'
-                  }`}
-                >
-                  ${preset}
-                </button>
-              ))}
-            </div>
+            {/* Amount Selection */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white">Select Amount</label>
+              <div className="grid grid-cols-5 gap-2">
+                {predefinedAmounts.map((presetAmount) => (
+                  <button
+                    key={presetAmount}
+                    onClick={() => {
+                      setAmount(presetAmount);
+                      setCustomAmount('');
+                    }}
+                    className={`py-3 px-2 rounded-lg text-sm font-medium transition-colors ${
+                      amount === presetAmount && !customAmount
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20'
+                    }`}
+                  >
+                    ${presetAmount}
+                  </button>
+                ))}
+              </div>
 
-            <div>
               <input
                 type="number"
                 placeholder="Custom amount"
                 value={customAmount}
                 onChange={(e) => setCustomAmount(e.target.value)}
-                className="w-full p-3 bg-brand-700 rounded-lg border border-white/10 text-white placeholder:text-white/50"
+                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:border-green-500 focus:outline-none"
               />
             </div>
 
-            <div>
+            {/* Optional Message */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Message (Optional)</label>
               <textarea
-                placeholder="Add a message (optional)"
+                placeholder="Send a message with your tip..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full p-3 bg-brand-700 rounded-lg border border-white/10 text-white placeholder:text-white/50 resize-none"
                 rows={3}
+                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:border-green-500 focus:outline-none resize-none"
               />
             </div>
 
+            {/* Action Button */}
             <button
               onClick={handleTip}
-              disabled={(!customAmount && !amount) || (customAmount && parseFloat(customAmount) <= 0)}
-              className="w-full bg-green-600 hover:bg-green-500 disabled:bg-gray-600 disabled:cursor-not-allowed p-3 rounded-lg font-semibold transition-colors"
+              disabled={isProcessing}
+              className="w-full bg-green-500 hover:bg-green-400 disabled:opacity-50 text-white py-3 rounded-lg font-semibold transition-colors"
             >
-              Tip ${customAmount || amount}
+              {isProcessing ? 'Processing...' : `Send $${customAmount || amount} Tip`}
             </button>
           </div>
         </Modal>
@@ -195,56 +262,65 @@ export default function ArtistPayment({ artistId }: ArtistPaymentProps) {
 
       {/* Gift Modal */}
       {activeModal === 'gift' && (
-        <Modal onClose={() => setActiveModal(null)}>
-          <div className="space-y-4">
+        <Modal onClose={() => setActiveModal(null)} title={`Send Gift to ${artist.name}`}>
+          <div className="space-y-6">
             <div className="text-center">
-              <Gift size={32} className="mx-auto text-purple-500 mb-2" />
-              <p className="text-sm text-white/70">Send a special gift with a message</p>
+              <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center">
+                <Gift size={24} className="text-purple-400" />
+              </div>
+              <p className="text-white/70">Send a special gift with your personal message</p>
             </div>
 
-            <div className="grid grid-cols-5 gap-2">
-              {predefinedAmounts.map((preset) => (
-                <button
-                  key={preset}
-                  onClick={() => { setAmount(preset); setCustomAmount(''); }}
-                  className={`p-2 rounded-lg text-sm font-semibold transition-colors ${
-                    amount === preset && !customAmount
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-brand-700 hover:bg-brand-600'
-                  }`}
-                >
-                  ${preset}
-                </button>
-              ))}
-            </div>
+            {/* Amount Selection */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white">Gift Amount</label>
+              <div className="grid grid-cols-5 gap-2">
+                {predefinedAmounts.map((presetAmount) => (
+                  <button
+                    key={presetAmount}
+                    onClick={() => {
+                      setAmount(presetAmount);
+                      setCustomAmount('');
+                    }}
+                    className={`py-3 px-2 rounded-lg text-sm font-medium transition-colors ${
+                      amount === presetAmount && !customAmount
+                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20'
+                    }`}
+                  >
+                    ${presetAmount}
+                  </button>
+                ))}
+              </div>
 
-            <div>
               <input
                 type="number"
                 placeholder="Custom amount"
                 value={customAmount}
                 onChange={(e) => setCustomAmount(e.target.value)}
-                className="w-full p-3 bg-brand-700 rounded-lg border border-white/10 text-white placeholder:text-white/50"
+                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:border-purple-500 focus:outline-none"
               />
             </div>
 
-            <div>
+            {/* Message */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Your Message</label>
               <textarea
-                placeholder="Gift message"
+                placeholder="Write your personal message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full p-3 bg-brand-700 rounded-lg border border-white/10 text-white placeholder:text-white/50 resize-none"
                 rows={3}
-                required
+                className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:border-purple-500 focus:outline-none resize-none"
               />
             </div>
 
+            {/* Action Button */}
             <button
               onClick={handleGift}
-              disabled={(!customAmount && !amount) || (customAmount && parseFloat(customAmount) <= 0) || !message.trim()}
-              className="w-full bg-purple-600 hover:bg-purple-500 disabled:bg-gray-600 disabled:cursor-not-allowed p-3 rounded-lg font-semibold transition-colors"
+              disabled={isProcessing}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 disabled:opacity-50 text-white py-3 rounded-lg font-semibold transition-colors"
             >
-              Send Gift ${customAmount || amount}
+              {isProcessing ? 'Processing...' : `Send $${customAmount || amount} Gift`}
             </button>
           </div>
         </Modal>
@@ -252,34 +328,29 @@ export default function ArtistPayment({ artistId }: ArtistPaymentProps) {
 
       {/* Album Modal */}
       {activeModal === 'album' && (
-        <Modal onClose={() => setActiveModal(null)}>
+        <Modal onClose={() => setActiveModal(null)} title={`${artist.name}'s Albums`}>
           <div className="space-y-4">
-            <div className="text-center">
-              <ShoppingBag size={32} className="mx-auto text-blue-500 mb-2" />
-              <p className="text-sm text-white/70">Purchase albums to support the artist</p>
-            </div>
-
-            <div className="space-y-3">
-              {artist.albums?.map((album) => (
-                <div key={album.id} className="flex items-center justify-between p-3 bg-brand-700 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <img src={album.cover} alt={album.title} className="w-12 h-12 rounded-lg object-cover" />
-                    <div>
-                      <div className="font-semibold">{album.title}</div>
-                      <div className="text-sm text-white/60">{album.year}</div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleBuyAlbum(album.id, 15)} // Default album price $15
-                    className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg font-semibold transition-colors"
-                  >
-                    $15
-                  </button>
+            {artist.albums.map((album) => (
+              <div
+                key={album.id}
+                className="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                  <Music size={20} className="text-white" />
                 </div>
-              )) || (
-                <p className="text-center text-white/60">No albums available for purchase</p>
-              )}
-            </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-white">{album.title}</h4>
+                  <p className="text-white/60 text-sm">{album.year} • {album.type}</p>
+                </div>
+                <button
+                  onClick={() => handleBuyAlbum(album.id, 15.99)}
+                  disabled={isProcessing}
+                  className="bg-blue-500 hover:bg-blue-400 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  $15.99
+                </button>
+              </div>
+            ))}
           </div>
         </Modal>
       )}

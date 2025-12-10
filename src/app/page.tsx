@@ -1,19 +1,45 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import FloatingParticles from "@/components/floating-particles";
 
 export default function CoverPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    // Auto-play background music when component mounts
+    if (audioRef.current) {
+      audioRef.current.volume = 0.3; // Set volume to 30%
+      audioRef.current.play().catch(() => {
+        // Handle autoplay restrictions
+        console.log("Autoplay blocked");
+      });
+    }
+  }, []);
 
   const handleEnter = () => {
     setIsLoading(true);
-    router.push("/home");
+    // Fade out audio before transitioning
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    router.push("/subscribe");
   };
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-black">
+      {/* Floating Particles */}
+      <FloatingParticles />
+
+      {/* Background Audio */}
+      <audio ref={audioRef} loop>
+        <source src="/Wahala 4.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
       {/* Background Video */}
       <video
         autoPlay
