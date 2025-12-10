@@ -291,7 +291,7 @@ export const artistsData: Record<string, Artist> = {
   "shallipopi": {
     id: "shallipopi",
     name: "Shallipopi",
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80",
+    image: "/Shalopoppi/weed.png",
     coverImage: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=1920&q=80",
     followers: "8.3M",
     monthlyListeners: "6.2M",
@@ -349,7 +349,7 @@ export const artistsData: Record<string, Artist> = {
   "seyi-vibez": {
     id: "seyi-vibez",
     name: "Seyi Vibez",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=640&q=80",
+    image: "/SeyiVibez/shades.png",
     coverImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80",
     followers: "4.2M",
     monthlyListeners: "3.8M",

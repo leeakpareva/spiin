@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function CoverPage() {
   const router = useRouter();
@@ -31,6 +31,11 @@ export default function CoverPage() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
+        {/* Logo/Title */}
+        <h1 className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tight animate-pulse-slow">
+          SPIIN
+        </h1>
+
         {/* Enter Button */}
         <button
           onClick={handleEnter}

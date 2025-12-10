@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import ConditionalLayout from "@/components/conditional-layout";
 import { PaymentProvider } from "@/lib/payment-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { MediaProvider } from "@/lib/media-context";
@@ -25,11 +24,9 @@ export default function RootLayout({
         <AuthProvider>
           <MediaProvider>
             <PaymentProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
+              <ConditionalLayout>
+                {children}
+              </ConditionalLayout>
             </PaymentProvider>
           </MediaProvider>
         </AuthProvider>
